@@ -1,12 +1,12 @@
 import { memo } from 'react';
-
+import { useNavigate } from 'react-router-dom';
 import { useState, useEffect, useRef } from "react";
 
 // ── Utility ──────────────────────────────────────────────────────────────────
 const Avatar = ({ initials, gradient, size = "md", online, away }) => {
   const sizes = { sm: "w-7 h-7 text-[10px]", md: "w-9 h-9 text-xs", lg: "w-11 h-11 text-sm" };
   return (
-    <div className="relative flex-shrink-0">
+    <div className="relative shrink-0">
       <div className={`${sizes[size]} rounded-full flex items-center justify-center font-bold text-white ${gradient}`}>
         {initials}
       </div>
@@ -18,7 +18,7 @@ const Avatar = ({ initials, gradient, size = "md", online, away }) => {
 };
 
 const TypingDots = () => (
-  <span className="inline-flex items-center gap-[3px] px-1">
+  <span className="inline-flex items-center gap-0.75 px-1">
     {[0, 1, 2].map((i) => (
       <span key={i} className="w-1.5 h-1.5 rounded-full bg-[#94A3B8] animate-bounce"
         style={{ animationDelay: `${i * 0.15}s`, animationDuration: "1s" }} />
@@ -41,7 +41,7 @@ function Navbar() {
       <div className="max-w-7xl mx-auto px-6 flex items-center justify-between">
         {/* Logo */}
         <a href="#" className="flex items-center gap-2.5 group">
-          <div className="w-8 h-8 rounded-xl bg-gradient-to-br from-[#2563EB] to-[#60A5FA] flex items-center justify-center shadow-lg shadow-blue-500/30 group-hover:shadow-blue-500/50 transition-shadow">
+          <div className="w-8 h-8 rounded-xl bg-linear-to-br from-[#2563EB] to-[#60A5FA] flex items-center justify-center shadow-lg shadow-blue-500/30 group-hover:shadow-blue-500/50 transition-shadow">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
               <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
             </svg>
@@ -61,11 +61,11 @@ function Navbar() {
 
         {/* CTA */}
         <div className="flex items-center gap-3">
-          <a href="#" className="hidden sm:block text-[#94A3B8] hover:text-[#F8FAFC] text-sm font-medium transition-colors px-4 py-2 rounded-lg hover:bg-white/5">
+          <a href="/login" className="hidden sm:block text-[#94A3B8] hover:text-[#F8FAFC] text-sm font-medium transition-colors px-4 py-2 rounded-lg hover:bg-white/5">
             Login
           </a>
-          <a href="#"
-            className="bg-gradient-to-r from-[#2563EB] to-[#3B82F6] hover:from-[#1D4ED8] hover:to-[#2563EB] text-white text-sm font-semibold px-5 py-2.5 rounded-xl shadow-lg shadow-blue-500/25 hover:shadow-blue-500/40 transition-all duration-200 hover:-translate-y-px">
+          <a href="/register"
+            className="bg-gradient-tlinear-[#2563EB] to-[#3B82F6] hover:from-[#1D4ED8] hover:to-[#2563EB] text-white text-sm font-semibold px-5 py-2.5 rounded-xl shadow-lg shadow-blue-500/25 hover:shadow-blue-500/40 transition-all duration-200 hover:-translate-y-px">
             Get Started
           </a>
         </div>
@@ -76,17 +76,17 @@ function Navbar() {
 
 function ChatMockup() {
   const conversations = [
-    { initials: "SJ", gradient: "bg-gradient-to-br from-violet-500 to-pink-500", name: "Sarah J.", preview: "Meeting at 5?", badge: 2, online: true },
-    { initials: "JD", gradient: "bg-gradient-to-br from-emerald-500 to-teal-500", name: "John D.", preview: "I'll be there!", online: true },
-    { initials: "AK", gradient: "bg-gradient-to-br from-amber-500 to-orange-500", name: "Alex K.", preview: "Joined the chat", away: true },
-    { initials: "MR", gradient: "bg-gradient-to-br from-slate-500 to-slate-600", name: "Mike R.", preview: "See you later!" },
+    { initials: "SJ", gradient: "bg-linear-to-br from-violet-500 to-pink-500", name: "Sarah J.", preview: "Meeting at 5?", badge: 2, online: true },
+    { initials: "JD", gradient: "bg-linear-to-br from-emerald-500 to-teal-500", name: "John D.", preview: "I'll be there!", online: true },
+    { initials: "AK", gradient: "bg-linear-to-br from-amber-500 to-orange-500", name: "Alex K.", preview: "Joined the chat", away: true },
+    { initials: "MR", gradient: "bg-linear-to-br from-slate-500 to-slate-600", name: "Mike R.", preview: "See you later!" },
   ];
 
   return (
     <div className="relative">
       {/* Glow behind mockup */}
-      <div className="absolute inset-0 -z-10 blur-3xl opacity-30 bg-gradient-to-br from-[#2563EB] via-[#3B82F6] to-transparent rounded-3xl scale-110" />
-      <div className="bg-gradient-to-br from-[#1E293B] to-[#0d1b2e] rounded-2xl border border-[#60A5FA]/15 shadow-2xl shadow-black/60 overflow-hidden">
+      <div className="absolute inset-0 -z-10 blur-3xl opacity-30 bg-linear-to-br from-[#2563EB] via-[#3B82F6] to-transparent rounded-3xl scale-110" />
+      <div className="bg-linear-to-br from-[#1E293B] to-[#0d1b2e] rounded-2xl border border-[#60A5FA]/15 shadow-2xl shadow-black/60 overflow-hidden">
         {/* Titlebar */}
         <div className="flex items-center gap-3 px-4 py-3 bg-[#0d1b2e]/80 border-b border-[#60A5FA]/10">
           <div className="flex gap-1.5">
@@ -127,20 +127,20 @@ function ChatMockup() {
             <div className="flex-1 p-4 flex flex-col gap-3 overflow-hidden">
               {/* Received */}
               <div className="flex items-end gap-2">
-                <Avatar initials="SJ" gradient="bg-gradient-to-br from-violet-500 to-pink-500" size="sm" />
+                <Avatar initials="SJ" gradient="bg-linear-to-br from-violet-500 to-pink-500" size="sm" />
                 <div>
                   <p className="text-[10px] text-[#94A3B8] mb-1 ml-0.5">Sarah · 2:47 PM</p>
-                  <div className="bg-[#1E293B] border border-[#60A5FA]/10 rounded-2xl rounded-bl-sm px-3 py-2 text-xs text-[#F8FAFC] max-w-[180px]">
+                  <div className="bg-[#1E293B] border border-[#60A5FA]/10 rounded-2xl rounded-bl-sm px-3 py-2 text-xs text-[#F8FAFC] max-w-45">
                     Are we still meeting at 5 PM? 📅
                   </div>
                 </div>
               </div>
               {/* Sent */}
               <div className="flex items-end gap-2 flex-row-reverse">
-                <Avatar initials="Me" gradient="bg-gradient-to-br from-[#2563EB] to-[#60A5FA]" size="sm" />
+                <Avatar initials="Me" gradient="bg-linear-to-br from-[#2563EB] to-[#60A5FA]" size="sm" />
                 <div className="flex flex-col items-end">
                   <p className="text-[10px] text-[#94A3B8] mb-1 mr-0.5">You · 2:48 PM</p>
-                  <div className="bg-gradient-to-br from-[#2563EB] to-[#3B82F6] rounded-2xl rounded-br-sm px-3 py-2 text-xs text-white max-w-[180px]">
+                  <div className="bg-linear-to-br from-[#2563EB] to-[#3B82F6] rounded-2xl rounded-br-sm px-3 py-2 text-xs text-white max-w-45">
                     Yes! I'll be there in 10 minutes 👍
                   </div>
                   <p className="text-[10px] text-[#60A5FA] mt-1 mr-0.5">✓✓ Seen</p>
@@ -148,7 +148,7 @@ function ChatMockup() {
               </div>
               {/* Typing */}
               <div className="flex items-end gap-2">
-                <Avatar initials="JD" gradient="bg-gradient-to-br from-emerald-500 to-teal-500" size="sm" />
+                <Avatar initials="JD" gradient="bg-linear-to-br from-emerald-500 to-teal-500" size="sm" />
                 <div>
                   <p className="text-[10px] text-[#94A3B8] mb-1 ml-0.5">John is typing…</p>
                   <div className="bg-[#1E293B] border border-[#60A5FA]/10 rounded-2xl rounded-bl-sm px-3 py-2.5">
@@ -162,7 +162,7 @@ function ChatMockup() {
               <div className="flex-1 bg-[#1E293B] border border-[#60A5FA]/15 rounded-xl px-3 py-2 text-[11px] text-[#94A3B8]">
                 Message #general…
               </div>
-              <button className="w-8 h-8 rounded-xl bg-gradient-to-br from-[#2563EB] to-[#3B82F6] flex items-center justify-center shadow-lg shadow-blue-500/30">
+              <button className="w-8 h-8 rounded-xl bg-linear-to-br from-[#2563EB] to-[#3B82F6] flex items-center justify-center shadow-lg shadow-blue-500/30">
                 <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                   <line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/>
                 </svg>
@@ -179,9 +179,9 @@ function Hero() {
   return (
     <section className="relative min-h-screen flex items-center pt-24 pb-20 px-6 overflow-hidden bg-[#0F172A]">
       {/* Ambient glows */}
-      <div className="pointer-events-none absolute -top-32 -left-32 w-[600px] h-[600px] rounded-full bg-[#2563EB]/20 blur-[120px]" />
-      <div className="pointer-events-none absolute top-1/3 -right-32 w-[500px] h-[500px] rounded-full bg-[#3B82F6]/15 blur-[100px]" />
-      <div className="pointer-events-none absolute bottom-0 left-1/3 w-[400px] h-[400px] rounded-full bg-[#60A5FA]/10 blur-[90px]" />
+      <div className="pointer-events-none absolute -top-32 -left-32 w-150 h-150 rounded-full bg-[#2563EB]/20 blur-[120px]" />
+      <div className="pointer-events-none absolute top-1/3 -right-32 w-125 h-125 rounded-full bg-[#3B82F6]/15 blur-[100px]" />
+      <div className="pointer-events-none absolute bottom-0 left-1/3 w-100 h-100 rounded-full bg-[#60A5FA]/10 blur-[90px]" />
       {/* Floating shapes */}
       <div className="pointer-events-none absolute top-32 right-1/4 w-3 h-3 rounded-full bg-[#60A5FA]/40 animate-pulse" />
       <div className="pointer-events-none absolute bottom-40 left-1/4 w-2 h-2 rounded-full bg-[#3B82F6]/60 animate-pulse" style={{ animationDelay: "0.8s" }} />
@@ -196,17 +196,17 @@ function Hero() {
           </div>
           <h1 className="text-5xl xl:text-6xl font-extrabold leading-[1.08] tracking-tight text-[#F8FAFC] mb-6">
             Connect{" "}
-            <span className="bg-gradient-to-r from-[#60A5FA] to-[#3B82F6] bg-clip-text text-transparent">Instantly.</span>
+            <span className="bg-linear-to-r from-[#60A5FA] to-[#3B82F6] bg-clip-text text-transparent">Instantly.</span>
             <br />
             Communicate<br />
-            <span className="bg-gradient-to-r from-[#F8FAFC] to-[#94A3B8] bg-clip-text text-transparent">Without Limits.</span>
+            <span className="bg-linear-to-r from-[#F8FAFC] to-[#94A3B8] bg-clip-text text-transparent">Without Limits.</span>
           </h1>
           <p className="text-[#94A3B8] text-lg leading-relaxed mb-10 max-w-lg">
             ChatSphere delivers lightning-fast real-time messaging with secure authentication, online presence tracking, typing indicators, file sharing, and seamless conversations across devices.
           </p>
           <div className="flex flex-wrap gap-4">
             <a href="#"
-              className="inline-flex items-center gap-2 bg-gradient-to-r from-[#2563EB] to-[#3B82F6] hover:from-[#1D4ED8] hover:to-[#2563EB] text-white font-semibold px-7 py-3.5 rounded-xl shadow-xl shadow-blue-500/30 hover:shadow-blue-500/45 transition-all duration-200 hover:-translate-y-0.5">
+              className="inline-flex items-center gap-2 bg-linear-to-r from-[#2563EB] to-[#3B82F6] hover:from-[#1D4ED8] hover:to-[#2563EB] text-white font-semibold px-7 py-3.5 rounded-xl shadow-xl shadow-blue-500/30 hover:shadow-blue-500/45 transition-all duration-200 hover:-translate-y-0.5">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
               </svg>
@@ -242,24 +242,24 @@ function LiveChatPreview() {
   }, []);
 
   const messages = [
-    { id: 0, from: "Sarah", initials: "SJ", gradient: "bg-gradient-to-br from-violet-500 to-pink-500", text: "Are we still meeting at 5 PM? 📅", sent: false },
-    { id: 1, typing: true, from: "John", initials: "JD", gradient: "bg-gradient-to-br from-emerald-500 to-teal-500" },
-    { id: 2, from: "John", initials: "JD", gradient: "bg-gradient-to-br from-emerald-500 to-teal-500", text: "Yes, I'll be there in 10 minutes! 🚗", sent: false, seen: true },
+    { id: 0, from: "Sarah", initials: "SJ", gradient: "bg-linear-to-br from-violet-500 to-pink-500", text: "Are we still meeting at 5 PM? 📅", sent: false },
+    { id: 1, typing: true, from: "John", initials: "JD", gradient: "bg-linear-to-br from-emerald-500 to-teal-500" },
+    { id: 2, from: "John", initials: "JD", gradient: "bg-linear-to-br from-emerald-500 to-teal-500", text: "Yes, I'll be there in 10 minutes! 🚗", sent: false, seen: true },
     { id: 3, join: true, name: "Alex" },
-    { id: 4, from: "Alex", initials: "AK", gradient: "bg-gradient-to-br from-amber-500 to-orange-500", text: "Awesome! I'm joining too 🙌", sent: false },
+    { id: 4, from: "Alex", initials: "AK", gradient: "bg-linear-to-br from-amber-500 to-orange-500", text: "Awesome! I'm joining too 🙌", sent: false },
   ];
 
   const visible = messages.slice(0, step + 1);
 
   return (
-    <section id="about" className="bg-gradient-to-b from-[#0F172A] via-[#0a1628] to-[#0F172A] py-28 px-6">
+    <section id="about" className="bg-linear-to-b from-[#0F172A] via-[#0a1628] to-[#0F172A] py-28 px-6">
       <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
         {/* Left copy */}
         <div>
           <p className="text-[#60A5FA] text-xs font-bold uppercase tracking-[3px] mb-4">Live Preview</p>
           <h2 className="text-4xl xl:text-5xl font-extrabold leading-tight tracking-tight text-[#F8FAFC] mb-6">
             Real-Time Communication<br />
-            <span className="bg-gradient-to-r from-[#60A5FA] to-[#3B82F6] bg-clip-text text-transparent">That Feels Instant</span>
+            <span className="bg-linear-to-r from-[#60A5FA] to-[#3B82F6] bg-clip-text text-transparent">That Feels Instant</span>
           </h2>
           <p className="text-[#94A3B8] text-lg leading-relaxed mb-8 max-w-md">
             Experience smooth, reliable messaging powered by modern real-time technologies. Every message arrives the moment it's sent.
@@ -279,11 +279,11 @@ function LiveChatPreview() {
         </div>
 
         {/* Right — animated chat */}
-        <div className="bg-gradient-to-br from-[#1E293B] to-[#0d1b2e] rounded-2xl border border-[#60A5FA]/15 shadow-2xl shadow-black/60 overflow-hidden">
+        <div className="bg-linear-to-br from-[#1E293B] to-[#0d1b2e] rounded-2xl border border-[#60A5FA]/15 shadow-2xl shadow-black/60 overflow-hidden">
           {/* Header */}
           <div className="flex items-center gap-3 px-5 py-4 border-b border-[#60A5FA]/10 bg-[#0d1b2e]/70">
             <div className="flex -space-x-1.5">
-              {["bg-gradient-to-br from-violet-500 to-pink-500", "bg-gradient-to-br from-emerald-500 to-teal-500", "bg-gradient-to-br from-amber-500 to-orange-500"].map((g, i) => (
+              {["bg-linear-to-br from-violet-500 to-pink-500", "bg-linear-to-br from-emerald-500 to-teal-500", "bg-linear-to-br from-amber-500 to-orange-500"].map((g, i) => (
                 <div key={i} className={`w-7 h-7 rounded-full border-2 border-[#0d1b2e] ${g} flex items-center justify-center text-[9px] font-bold text-white`}>
                   {["S", "J", "A"][i]}
                 </div>
@@ -296,7 +296,7 @@ function LiveChatPreview() {
           </div>
 
           {/* Messages */}
-          <div className="p-5 flex flex-col gap-4 min-h-[260px]">
+          <div className="p-5 flex flex-col gap-4 min-h-65">
             {visible.map((m) =>
               m.join ? (
                 <div key={m.id} className="text-center">
@@ -321,7 +321,7 @@ function LiveChatPreview() {
                     <p className={`text-[10px] text-[#94A3B8] mb-1 ${m.sent ? "mr-0.5 text-right" : "ml-0.5"}`}>{m.from}</p>
                     <div className={`rounded-2xl px-4 py-2.5 text-sm max-w-xs ${
                       m.sent
-                        ? "bg-gradient-to-br from-[#2563EB] to-[#3B82F6] text-white rounded-br-sm"
+                        ? "bg-linear-to-br from-[#2563EB] to-[#3B82F6] text-white rounded-br-sm"
                         : "bg-[#1E293B] border border-[#60A5FA]/10 text-[#F8FAFC] rounded-bl-sm"
                     }`}>{m.text}</div>
                     {m.seen && <p className="text-[10px] text-[#60A5FA] mt-1 mr-0.5">✓✓ Seen</p>}
@@ -353,17 +353,17 @@ function Features() {
           <p className="text-[#60A5FA] text-xs font-bold uppercase tracking-[3px] mb-4">Features</p>
           <h2 className="text-4xl xl:text-5xl font-extrabold tracking-tight text-[#F8FAFC] mb-5">
             Everything You Need To<br />
-            <span className="bg-gradient-to-r from-[#60A5FA] to-[#3B82F6] bg-clip-text text-transparent">Stay Connected</span>
+            <span className="bg-linear-to-r from-[#60A5FA] to-[#3B82F6] bg-clip-text text-transparent">Stay Connected</span>
           </h2>
           <p className="text-[#94A3B8] text-lg max-w-xl mx-auto">Powerful features built for individuals, teams, and communities of any scale.</p>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
           {features.map((f) => (
             <div key={f.title}
-              className="group relative bg-gradient-to-br from-[#1E293B] to-[#0d1b2e] border border-[#60A5FA]/10 rounded-2xl p-7 hover:border-[#60A5FA]/30 hover:-translate-y-1 transition-all duration-300 hover:shadow-xl hover:shadow-blue-500/10 overflow-hidden">
+              className="group relative bg-linear-to-br from-[#1E293B] to-[#0d1b2e] border border-[#60A5FA]/10 rounded-2xl p-7 hover:border-[#60A5FA]/30 hover:-translate-y-1 transition-all duration-300 hover:shadow-xl hover:shadow-blue-500/10 overflow-hidden">
               {/* Top shimmer line on hover */}
-              <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-[#60A5FA]/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-              <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-[#2563EB]/20 to-[#60A5FA]/10 border border-[#60A5FA]/20 flex items-center justify-center text-2xl mb-5 group-hover:scale-110 transition-transform duration-300">
+              <div className="absolute inset-x-0 top-0 h-px bg-linear-to-r from-transparent via-[#60A5FA]/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+              <div className="w-12 h-12 rounded-2xl bg-linear-to-br from-[#2563EB]/20 to-[#60A5FA]/10 border border-[#60A5FA]/20 flex items-center justify-center text-2xl mb-5 group-hover:scale-110 transition-transform duration-300">
                 {f.icon}
               </div>
               <h3 className="text-[#F8FAFC] font-bold text-lg mb-3">{f.title}</h3>
@@ -384,14 +384,14 @@ function Showcase() {
           <p className="text-[#60A5FA] text-xs font-bold uppercase tracking-[3px] mb-4">Product</p>
           <h2 className="text-4xl xl:text-5xl font-extrabold tracking-tight text-[#F8FAFC] mb-5">
             Designed For<br />
-            <span className="bg-gradient-to-r from-[#60A5FA] to-[#3B82F6] bg-clip-text text-transparent">Modern Conversations</span>
+            <span className="bg-linear-to-r from-[#60A5FA] to-[#3B82F6] bg-clip-text text-transparent">Modern Conversations</span>
           </h2>
         </div>
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-5">
           {/* Desktop — spans 2 cols */}
           <div className="lg:col-span-2 relative group">
-            <div className="absolute -inset-px rounded-2xl bg-gradient-to-br from-[#2563EB]/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-            <div className="bg-gradient-to-br from-[#1E293B] to-[#0d1b2e] rounded-2xl border border-[#60A5FA]/15 shadow-2xl shadow-black/50 overflow-hidden h-full">
+            <div className="absolute -inset-px rounded-2xl bg-linear-to-br from-[#2563EB]/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+            <div className="bg-linear-to-br from-[#1E293B] to-[#0d1b2e] rounded-2xl border border-[#60A5FA]/15 shadow-2xl shadow-black/50 overflow-hidden h-full">
               <div className="flex items-center gap-2 px-4 py-3 bg-[#0d1b2e]/80 border-b border-[#60A5FA]/10">
                 <div className="flex gap-1.5"><span className="w-2.5 h-2.5 rounded-full bg-red-500/70"/><span className="w-2.5 h-2.5 rounded-full bg-yellow-500/70"/><span className="w-2.5 h-2.5 rounded-full bg-green-500/70"/></div>
                 <span className="text-[10px] text-[#94A3B8] ml-2">ChatSphere — Desktop</span>
@@ -404,12 +404,12 @@ function Showcase() {
                 </div>
                 <div className="flex-1 flex flex-col gap-3">
                   {[
-                    { initials: "SJ", g: "bg-gradient-to-br from-violet-500 to-pink-500", name: "Sarah", text: "Design review at 3 PM! 🎨", sent: false },
-                    { initials: "Me", g: "bg-gradient-to-br from-[#2563EB] to-[#60A5FA]", name: "You", text: "Mockups are ready ✅", sent: true },
+                    { initials: "SJ", g: "bg-linear-to-br from-violet-500 to-pink-500", name: "Sarah", text: "Design review at 3 PM! 🎨", sent: false },
+                    { initials: "Me", g: "bg-linear-to-br from-[#2563EB] to-[#60A5FA]", name: "You", text: "Mockups are ready ✅", sent: true },
                   ].map((m, i) => (
                     <div key={i} className={`flex items-end gap-2 ${m.sent ? "flex-row-reverse" : ""}`}>
-                      <div className={`w-6 h-6 rounded-full flex-shrink-0 flex items-center justify-center text-[9px] font-bold text-white ${m.g}`}>{m.initials}</div>
-                      <div className={`rounded-xl px-3 py-2 text-[11px] max-w-[200px] ${m.sent ? "bg-gradient-to-br from-[#2563EB] to-[#3B82F6] text-white" : "bg-[#0d1b2e] border border-[#60A5FA]/10 text-[#F8FAFC]"}`}>{m.text}</div>
+                      <div className={`w-6 h-6 rounded-full shrink-0 flex items-center justify-center text-[9px] font-bold text-white ${m.g}`}>{m.initials}</div>
+                      <div className={`rounded-xl px-3 py-2 text-[11px] max-w-50 ${m.sent ? "bg-linear-to-br from-[#2563EB] to-[#3B82F6] text-white" : "bg-[#0d1b2e] border border-[#60A5FA]/10 text-[#F8FAFC]"}`}>{m.text}</div>
                     </div>
                   ))}
                 </div>
@@ -423,13 +423,13 @@ function Showcase() {
           {/* Right column */}
           <div className="flex flex-col gap-5">
             {/* Mobile */}
-            <div className="relative group bg-gradient-to-br from-[#1E293B] to-[#0d1b2e] rounded-2xl border border-[#60A5FA]/15 shadow-xl shadow-black/50 overflow-hidden p-5">
+            <div className="relative group bg-linear-to-br from-[#1E293B] to-[#0d1b2e] rounded-2xl border border-[#60A5FA]/15 shadow-xl shadow-black/50 overflow-hidden p-5">
               <span className="absolute top-3 right-3 bg-[#1E293B] border border-[#60A5FA]/20 text-[#60A5FA] text-[10px] font-semibold px-2.5 py-1 rounded-lg">Mobile</span>
               <div className="flex flex-col gap-2.5 mt-6">
                 <div className="bg-[#0d1b2e] border border-[#60A5FA]/10 rounded-xl rounded-bl-sm px-3 py-2 text-xs text-[#F8FAFC] max-w-[75%]">Are you free now? 👋</div>
-                <div className="bg-gradient-to-br from-[#2563EB] to-[#3B82F6] rounded-xl rounded-br-sm px-3 py-2 text-xs text-white max-w-[75%] self-end">Yes, one sec! 😊</div>
+                <div className="bg-linear-to-br from-[#2563EB] to-[#3B82F6] rounded-xl rounded-br-sm px-3 py-2 text-xs text-white max-w-[75%] self-end">Yes, one sec! 😊</div>
                 <div className="flex items-center gap-1.5">
-                  <div className="w-6 h-6 rounded-full bg-gradient-to-br from-emerald-500 to-teal-500 flex items-center justify-center text-[9px] font-bold text-white">J</div>
+                  <div className="w-6 h-6 rounded-full bg-linear-to-br from-emerald-500 to-teal-500 flex items-center justify-center text-[9px] font-bold text-white">J</div>
                   <div className="bg-[#0d1b2e] border border-[#60A5FA]/10 rounded-xl rounded-bl-sm px-3 py-2">
                     <TypingDots />
                   </div>
@@ -438,10 +438,10 @@ function Showcase() {
             </div>
 
             {/* Group */}
-            <div className="relative group bg-gradient-to-br from-[#1E293B] to-[#0d1b2e] rounded-2xl border border-[#60A5FA]/15 shadow-xl shadow-black/50 overflow-hidden p-5">
+            <div className="relative group bg-linear-to-br from-[#1E293B] to-[#0d1b2e] rounded-2xl border border-[#60A5FA]/15 shadow-xl shadow-black/50 overflow-hidden p-5">
               <span className="absolute top-3 right-3 bg-[#1E293B] border border-[#60A5FA]/20 text-[#60A5FA] text-[10px] font-semibold px-2.5 py-1 rounded-lg">Group</span>
               <div className="flex -space-x-1.5 mt-6 mb-3">
-                {["bg-gradient-to-br from-violet-500 to-pink-500", "bg-gradient-to-br from-emerald-500 to-teal-500", "bg-gradient-to-br from-amber-500 to-orange-500"].map((g, i) => (
+                {["bg-linear-to-br from-violet-500 to-pink-500", "bg-linear-to-br from-emerald-500 to-teal-500", "bg-linear-to-br from-amber-500 to-orange-500"].map((g, i) => (
                   <div key={i} className={`w-7 h-7 rounded-full border-2 border-[#1E293B] ${g} flex items-center justify-center text-[9px] font-bold text-white`}>
                     {["S","J","A"][i]}
                   </div>
@@ -469,19 +469,19 @@ function WhyChoose() {
   ];
 
   return (
-    <section className="bg-gradient-to-b from-[#080e1a] to-[#0F172A] py-28 px-6">
+    <section className="bg-linear-to-b from-[#080e1a] to-[#0F172A] py-28 px-6">
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-16">
           <p className="text-[#60A5FA] text-xs font-bold uppercase tracking-[3px] mb-4">Why ChatSphere</p>
           <h2 className="text-4xl xl:text-5xl font-extrabold tracking-tight text-[#F8FAFC] mb-5">
             Built Different,{" "}
-            <span className="bg-gradient-to-r from-[#60A5FA] to-[#3B82F6] bg-clip-text text-transparent">Built Better</span>
+            <span className="bg-linear-to-r from-[#60A5FA] to-[#3B82F6] bg-clip-text text-transparent">Built Better</span>
           </h2>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {pillars.map((p) => (
             <div key={p.title}
-              className="bg-gradient-to-br from-[#1E293B]/80 to-[#2563EB]/5 border border-[#60A5FA]/10 rounded-2xl p-8 text-center hover:border-[#60A5FA]/25 hover:-translate-y-1 transition-all duration-300">
+              className="bg-linear-to-br from-[#1E293B]/80 to-[#2563EB]/5 border border-[#60A5FA]/10 rounded-2xl p-8 text-center hover:border-[#60A5FA]/25 hover:-translate-y-1 transition-all duration-300">
               <div className="text-4xl mb-5">{p.icon}</div>
               <h3 className="text-[#F8FAFC] font-extrabold text-2xl mb-3">{p.title}</h3>
               <p className="text-[#94A3B8] text-sm leading-relaxed">{p.desc}</p>
@@ -510,7 +510,7 @@ function TechStack() {
           <p className="text-[#60A5FA] text-xs font-bold uppercase tracking-[3px] mb-4">Technology</p>
           <h2 className="text-4xl xl:text-5xl font-extrabold tracking-tight text-[#F8FAFC] mb-5">
             Built With Modern{" "}
-            <span className="bg-gradient-to-r from-[#60A5FA] to-[#3B82F6] bg-clip-text text-transparent">Technologies</span>
+            <span className="bg-linear-to-r from-[#60A5FA] to-[#3B82F6] bg-clip-text text-transparent">Technologies</span>
           </h2>
           <p className="text-[#94A3B8] text-lg max-w-xl mx-auto">A battle-tested, modern stack for maximum performance and developer experience.</p>
         </div>
@@ -539,9 +539,9 @@ function CTA() {
   return (
     <section className="relative py-28 px-6 overflow-hidden bg-[#0F172A]">
       {/* Background gradient card */}
-      <div className="pointer-events-none absolute inset-6 rounded-3xl bg-gradient-to-br from-[#1E293B] via-[#0d1b2e] to-[#1E293B] border border-[#2563EB]/20" />
+      <div className="pointer-events-none absolute inset-6 rounded-3xl bg-linear-to-br from-[#1E293B] via-[#0d1b2e] to-[#1E293B] border border-[#2563EB]/20" />
       <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
-        <div className="w-[600px] h-[400px] rounded-full bg-[#2563EB]/15 blur-[100px]" />
+        <div className="w-150 h-100 rounded-full bg-[#2563EB]/15 blur-[100px]" />
       </div>
 
       <div className="relative max-w-3xl mx-auto text-center">
@@ -551,14 +551,14 @@ function CTA() {
         </div>
         <h2 className="text-5xl xl:text-6xl font-extrabold tracking-tight text-[#F8FAFC] mb-6">
           Ready To Start{" "}
-          <span className="bg-gradient-to-r from-[#60A5FA] to-[#3B82F6] bg-clip-text text-transparent">Chatting?</span>
+          <span className="bg-linear-to-r from-[#60A5FA] to-[#3B82F6] bg-clip-text text-transparent">Chatting?</span>
         </h2>
         <p className="text-[#94A3B8] text-lg mb-10 max-w-lg mx-auto">
           Join ChatSphere today and experience real-time communication built for the modern web.
         </p>
         <div className="flex flex-wrap gap-4 justify-center">
           <a href="#"
-            className="inline-flex items-center gap-2 bg-gradient-to-r from-[#2563EB] to-[#3B82F6] hover:from-[#1D4ED8] hover:to-[#2563EB] text-white font-semibold px-8 py-4 rounded-xl shadow-xl shadow-blue-500/30 hover:shadow-blue-500/50 transition-all duration-200 hover:-translate-y-0.5 text-base">
+            className="inline-flex items-center gap-2 bg-linear-to-r from-[#2563EB] to-[#3B82F6] hover:from-[#1D4ED8] hover:to-[#2563EB] text-white font-semibold px-8 py-4 rounded-xl shadow-xl shadow-blue-500/30 hover:shadow-blue-500/50 transition-all duration-200 hover:-translate-y-0.5 text-base">
             🚀 Create Free Account
           </a>
           <a href="#"
@@ -586,7 +586,7 @@ function Footer() {
           {/* Brand */}
           <div className="md:col-span-2">
             <div className="flex items-center gap-2.5 mb-4">
-              <div className="w-8 h-8 rounded-xl bg-gradient-to-br from-[#2563EB] to-[#60A5FA] flex items-center justify-center">
+              <div className="w-8 h-8 rounded-xl bg-linear-to-br from-[#2563EB] to-[#60A5FA] flex items-center justify-center">
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                   <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
                 </svg>

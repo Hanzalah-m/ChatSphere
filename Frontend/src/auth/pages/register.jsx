@@ -109,9 +109,9 @@ export default function SignUpPage() {
     <div className="min-h-screen bg-[#0F172A] flex items-center justify-center px-4 py-12 relative overflow-hidden">
 
       {/* Ambient glows */}
-      <div className="pointer-events-none absolute -top-40 -right-40 w-[600px] h-[600px] rounded-full bg-[#2563EB]/20 blur-[130px]" />
-      <div className="pointer-events-none absolute -bottom-40 -left-40 w-[500px] h-[500px] rounded-full bg-[#3B82F6]/15 blur-[110px]" />
-      <div className="pointer-events-none absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] h-[300px] rounded-full bg-[#60A5FA]/5 blur-[80px]" />
+      <div className="pointer-events-none absolute -top-40 -right-40 w-150 h-150 rounded-full bg-[#2563EB]/20 blur-[130px]" />
+      <div className="pointer-events-none absolute -bottom-40 -left-40 w-125 h-125 rounded-full bg-[#3B82F6]/15 blur-[110px]" />
+      <div className="pointer-events-none absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-75 h-75 rounded-full bg-[#60A5FA]/5 blur-[80px]" />
 
       {/* Floating dots */}
       <div className="pointer-events-none absolute top-20 left-1/3 w-2 h-2 rounded-full bg-[#60A5FA]/40 animate-pulse" />
@@ -122,7 +122,7 @@ export default function SignUpPage() {
 
         {/* Logo */}
         <div className="flex items-center justify-center gap-2.5 mb-8">
-          <div className="w-10 h-10 rounded-2xl bg-gradient-to-br from-[#2563EB] to-[#60A5FA] flex items-center justify-center shadow-lg shadow-blue-500/40">
+          <div className="w-10 h-10 rounded-2xl bg-linear-to-br from-[#2563EB] to-[#60A5FA] flex items-center justify-center shadow-lg shadow-blue-500/40">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
               <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
             </svg>
@@ -133,7 +133,7 @@ export default function SignUpPage() {
         </div>
 
         {/* Card */}
-        <div className="bg-gradient-to-br from-[#1E293B]/90 to-[#0d1b2e]/90 backdrop-blur-xl border border-[#60A5FA]/15 rounded-3xl shadow-2xl shadow-black/60 p-8">
+        <div className="bg-linear-to-br from-[#1E293B]/90 to-[#0d1b2e]/90 backdrop-blur-xl border border-[#60A5FA]/15 rounded-3xl shadow-2xl shadow-black/60 p-8">
 
           {/* Heading */}
           <div className="text-center mb-8">
@@ -273,7 +273,7 @@ export default function SignUpPage() {
             {/* Terms */}
             <div className="flex flex-col gap-1">
               <label className="flex items-start gap-2.5 cursor-pointer group">
-                <div className="relative mt-0.5 flex-shrink-0">
+                <div className="relative mt-0.5 shrink-0">
                   <input
                     type="checkbox"
                     checked={agreed}
@@ -312,7 +312,7 @@ export default function SignUpPage() {
             <button
               type="submit"
               disabled={loading}
-              className="relative mt-2 w-full bg-gradient-to-r from-[#2563EB] to-[#3B82F6] hover:from-[#1D4ED8] hover:to-[#2563EB] disabled:opacity-70 disabled:cursor-not-allowed text-white font-semibold py-3.5 rounded-xl shadow-lg shadow-blue-500/30 hover:shadow-blue-500/50 transition-all duration-200 hover:-translate-y-px text-sm overflow-hidden"
+              className="relative mt-2 w-full bg-linear-to-r from-[#2563EB] to-[#3B82F6] hover:from-[#1D4ED8] hover:to-[#2563EB] disabled:opacity-70 disabled:cursor-not-allowed text-white font-semibold py-3.5 rounded-xl shadow-lg shadow-blue-500/30 hover:shadow-blue-500/50 transition-all duration-200 hover:-translate-y-px text-sm overflow-hidden"
             >
               {loading ? (
                 <span className="flex items-center justify-center gap-2">
@@ -331,7 +331,7 @@ export default function SignUpPage() {
                 </span>
               )}
               {/* Shimmer */}
-              <div className="absolute inset-0 -translate-x-full hover:translate-x-full transition-transform duration-700 bg-gradient-to-r from-transparent via-white/10 to-transparent skew-x-12 pointer-events-none" />
+              <div className="absolute inset-0 -translate-x-full hover:translate-x-full transition-transform duration-700 bg-linear-to-r from-transparent via-white/10 to-transparent skew-x-12 pointer-events-none" />
             </button>
           </form>
 
