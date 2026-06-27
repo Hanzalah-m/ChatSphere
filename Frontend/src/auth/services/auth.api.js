@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const api = axios.create ({
-    baseURL: "http://localhost:300",
+    baseURL: "http://localhost:3000",
     withCredentials: true
 })
 
@@ -18,8 +18,9 @@ async function loginUser(identifier, password) {
 
     try{
         const response = await api.post("/api/auth/login",{identifier, password})
+        return response.data;
     }catch(err){
-        throw error.response ? error.response.data : new Error("Network Error");
+        throw err?.response ? err.response.data : new Error("Network Error");
     }
     
 }

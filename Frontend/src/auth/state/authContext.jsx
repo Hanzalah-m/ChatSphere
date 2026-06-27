@@ -1,9 +1,9 @@
 import { memo,createContext, useState, useEffect } from 'react';
-import { getProfile } from '../api/authApi';
+import { getProfile } from '../services/auth.api';
 
 export const AuthContext = createContext();
 
-const authProvider = ({childen}) => {
+const AuthProvider = ({children}) => {
 
     const [user,setUser] = useState(null);
     const [loading,setLoading] = useState(true);
@@ -23,9 +23,9 @@ const authProvider = ({childen}) => {
 
   return (
     <AuthContext.Provider value={{user,loading,setUser,setLoading}}>
-        {childen}
+        {children}
     </AuthContext.Provider>
   )
 };
 
-export default memo(authContext);
+export default memo(AuthProvider);

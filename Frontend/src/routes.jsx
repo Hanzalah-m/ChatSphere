@@ -4,6 +4,8 @@ import Home from './auth/pages/home';
 import Login from './auth/pages/login';
 import Register from './auth/pages/register';
 import Profile from './auth/pages/profile';
+import Dashboard from './Home/page/home';
+import Protected from './auth/component/protected';
 
 export const router = createBrowserRouter([
     {
@@ -21,6 +23,10 @@ export const router = createBrowserRouter([
     {  
         path: '/profile',
         element: <Profile />
+    },
+    {
+        path: '/dashboard',
+        element:<Protected><Dashboard /></Protected> 
     }
 ])
 

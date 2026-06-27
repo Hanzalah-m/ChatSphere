@@ -1,6 +1,7 @@
 import { memo } from 'react';
-
+import { useAuth } from "../hooks/useAuth";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 function PasswordStrength({ password }) {
   const checks = [
@@ -42,8 +43,9 @@ export default function SignUpPage() {
   const [form, setForm] = useState({ username: "", email: "", password: "", confirm: "" });
   const [show, setShow] = useState({ password: false, confirm: false });
   const [agreed, setAgreed] = useState(false);
-  const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState({});
+  const navigate = useNavigate();
+  const { handleRegister, loading } = useAuth();
 
   const handleChange = (e) => {
     setForm((p) => ({ ...p, [e.target.name]: e.target.value }));
@@ -64,13 +66,17 @@ export default function SignUpPage() {
     return e;
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const e2 = validate();
     if (Object.keys(e2).length) { setErrors(e2); return; }
-    setLoading(true);
-    // TODO: wire up your register logic here
-    setTimeout(() => setLoading(false), 2000);
+
+    const result = await handleRegister(form.username, form.email, form.password, undefined, form.username);
+    if (result.success) {
+      navigate("/dashboard");
+    } else {
+      setErrors({ general: result.message });
+    }
   };
 
   const fields = [
