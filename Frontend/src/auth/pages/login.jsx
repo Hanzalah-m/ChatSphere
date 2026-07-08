@@ -123,11 +123,11 @@ export default function LoginPage() {
                   </svg>
                 </div>
                 <input
-                  type="email"
+                  type="text"
                   name="email"
                   value={form.email}
                   onChange={handleChange}
-                  placeholder="you@example.com"
+                  placeholder="Email or Username"
                   autoComplete="email"
                   className="w-full bg-[#0d1b2e]/80 border border-[#60A5FA]/15 focus:border-[#3B82F6]/60 focus:ring-2 focus:ring-[#3B82F6]/20 rounded-xl pl-10 pr-4 py-3 text-sm text-[#F8FAFC] placeholder-[#475569] outline-none transition-all duration-200"
                 />

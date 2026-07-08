@@ -287,7 +287,7 @@ export default function SignUpPage() {
                     className="peer sr-only"
                   />
                   <div
-                    onClick={() => { setAgreed((v) => !v); setErrors((p) => ({ ...p, agreed: "" })); }}
+                    // onClick={() => { setAgreed((v) => !v); setErrors((p) => ({ ...p, agreed: "" })); }}
                     className={`w-4 h-4 rounded border transition-all duration-200 flex items-center justify-center cursor-pointer ${agreed ? "bg-[#2563EB] border-[#2563EB]" : "bg-[#0d1b2e] border-[#60A5FA]/25"}`}
                   >
                     {agreed && (
