@@ -1,4 +1,4 @@
-import { memo } from 'react';
+
 import {createBrowserRouter} from 'react-router-dom';
 import Home from './feature/auth/pages/home';
 import Login from './feature/auth/pages/login';
@@ -31,4 +31,4 @@ export const router = createBrowserRouter([
     }
 ])
 
-export default memo(router);
+export default router;
