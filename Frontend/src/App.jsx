@@ -1,18 +1,20 @@
 import './App.css'
-import {RouterProvider} from 'react-router-dom'
-import {router} from './routes'
-import AuthProvider from './auth/state/authContext'
-
+import { useEffect } from 'react'
+import { RouterProvider } from 'react-router-dom'
+import { router } from './routes'
+import { useAuth } from './auth/hooks/useAuth'
+// import AuthProvider from './auth/state/authContext'
 
 function App() {
+  const { fetchCurrentUser } = useAuth()
+
+  useEffect(() => {
+    fetchCurrentUser()
+  }, [])
 
   return (
     <>
-
-    <AuthProvider>
-      <RouterProvider router={router}/>
-    </AuthProvider>
-      
+      <RouterProvider router={router} />
     </>
   )
 }

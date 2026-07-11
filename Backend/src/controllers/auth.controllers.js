@@ -34,7 +34,11 @@ const registerUser = async (req, res) => {
       { expiresIn: "1h" }
     );
 
-    res.cookie("token", token)
+    res.cookie("token", token, {
+  httpOnly: true,
+  secure: true,        // required for HTTPS
+  sameSite: "none",    // required for cross-site cookies
+});
 
     res.status(201).json({
       message: "User registered successfully",
@@ -81,7 +85,11 @@ const loginUser = async (req, res) => {
       { expiresIn: "1h" }
     );
 
-    res.cookie("token", token)
+    res.cookie("token", token, {
+  httpOnly: true,
+  secure: true,        // required for HTTPS
+  sameSite: "none",    // required for cross-site cookies
+});
 
     res.json({
       message: "Login successful",
@@ -117,7 +125,16 @@ const getProfile = async (req, res) => {
     }
     
 
-    res.json({ user });
+    res.status(200).json({
+    message: "user fetched successfully",
+    user: {
+        id: user._id,
+        username: user.username,
+        email: user.email,
+        profilePicture: user.profilePicture,
+        name: user.name
+      }
+  })
 
   } catch (error) {
     res.status(500).json({ message: "Error fetching profile", error });

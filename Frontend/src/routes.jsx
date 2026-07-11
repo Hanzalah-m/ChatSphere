@@ -3,26 +3,27 @@ import {createBrowserRouter} from 'react-router-dom';
 import Home from './auth/pages/home';
 import Login from './auth/pages/login';
 import Register from './auth/pages/register';
-import Profile from './auth/pages/profile';
+import Profile from './Home/page/profile';
 import Dashboard from './Home/page/home';
 import Protected from './auth/component/protected';
+import PublicRoute from './auth/component/public';
 
 export const router = createBrowserRouter([
     {
         path: '/',
-        element: <Home />
+        element:<PublicRoute><Home /></PublicRoute> 
     },
     {
         path: '/login',
-        element: <Login />
+        element: <PublicRoute> <Login /></PublicRoute>
     },
     {
         path: '/register',
-        element: <Register />
+        element: <PublicRoute><Register /></PublicRoute>
     },
     {  
         path: '/profile',
-        element: <Profile />
+        element:<Protected><Profile /></Protected> 
     },
     {
         path: '/dashboard',

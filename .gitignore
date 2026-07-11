@@ -1,3 +1,4 @@
+CODEBASE_REPORT.md
 # Logs
 logs
 *.log
@@ -22,3 +23,8 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+.vercel
+
+.env
+.env.local

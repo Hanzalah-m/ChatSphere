@@ -1,16 +1,20 @@
-import { useContext } from "react";
-import { AuthContext } from "../state/authContext";
-import { loginUser, registerUser, logoutUser, getProfile } from "../services/auth.api";
+// src/features/auth/hooks/useAuth.js
+import { useDispatch, useSelector } from 'react-redux';
+import { setUser, clearUser, setLoading } from '../../store/userSlice';
+import { loginUser, registerUser, logoutUser, getProfile } from '../services/auth.api';
 
 const useAuth = () => {
-    const context = useContext(AuthContext)
-    const { user, setUser, loading, setLoading } = context;
+    const dispatch = useDispatch();
+
+    // Replaces: const { user, setUser, loading, setLoading } = useContext(AuthContext)
+    const user = useSelector((state) => state.user.user);
+    const loading = useSelector((state) => state.user.loading);
 
     const handleLogin = async (identifier, password) => {
-        setLoading(true)
+        dispatch(setLoading(true))                    // was: setLoading(true)
         try {
             const userData = await loginUser(identifier, password)
-            setUser(userData?.user ?? userData)
+            dispatch(setUser(userData?.user ?? userData))  // was: setUser(...)
             return {
                 success: true,
                 user: userData?.user ?? userData
@@ -21,23 +25,21 @@ const useAuth = () => {
                 success: false,
                 message: err?.response?.data?.message || "Invalid username or password"
             }
-
         }
         finally {
-            setLoading(false)
+            dispatch(setLoading(false))               // was: setLoading(false)
         }
     }
 
     const handleRegister = async (username, email, password, profilePicture, name) => {
-        setLoading(true)
+        dispatch(setLoading(true))                    // was: setLoading(true)
         try {
             const userData = await registerUser(username, email, password, profilePicture, name)
-            setUser(userData?.user ?? userData)
+            dispatch(setUser(userData?.user ?? userData))  // was: setUser(...)
             return {
                 success: true,
                 user: userData?.user ?? userData
             }
-
         } catch (error) {
             console.log("Registration failed", error)
             return {
@@ -45,16 +47,15 @@ const useAuth = () => {
                 message: error?.response?.data?.message || (typeof error === "string" ? error : "Registration failed. Please try again.")
             }
         } finally {
-            setLoading(false)
+            dispatch(setLoading(false))               // was: setLoading(false)
         }
     }
 
     const handleLogout = async () => {
-
-        setLoading(true)
+        dispatch(setLoading(true))                    // was: setLoading(true)
         try {
             await logoutUser()
-            setUser(null)
+            dispatch(clearUser())                     // was: setUser(null)
             return {
                 success: true,
             }
@@ -66,22 +67,21 @@ const useAuth = () => {
             }
         }
         finally {
-            setLoading(false)
+            dispatch(setLoading(false))               // was: setLoading(false)
         }
-
     }
 
     const fetchCurrentUser = async () => {
-        setLoading(true);
+        dispatch(setLoading(true));                   // was: setLoading(true)
         try {
             const userData = await getProfile();
-            setUser(userData?.user ?? userData);
+            dispatch(setUser(userData?.user ?? userData));  // was: setUser(...)
         }
         catch (error) {
             console.error("Fetching current user failed:", error);
         }
         finally {
-            setLoading(false);
+            dispatch(setLoading(false));              // was: setLoading(false)
         }
     };
 
@@ -93,9 +93,6 @@ const useAuth = () => {
         handleLogout,
         fetchCurrentUser
     }
-
-
-
 }
 
 export { useAuth };
