@@ -1,7 +1,7 @@
 // src/features/auth/hooks/useAuth.js
 import { useDispatch, useSelector } from 'react-redux';
-import { setUser, clearUser, setLoading } from '../../store/userSlice';
-import { loginUser, registerUser, logoutUser, getProfile } from '../services/auth.api';
+import { setUser, clearUser, setLoading } from '../../../store/userSlice';
+import { loginUser, registerUser, logoutUser, getProfile } from '../auth.api';
 
 const useAuth = () => {
     const dispatch = useDispatch();

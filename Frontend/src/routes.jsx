@@ -1,12 +1,12 @@
 import { memo } from 'react';
 import {createBrowserRouter} from 'react-router-dom';
-import Home from './auth/pages/home';
-import Login from './auth/pages/login';
-import Register from './auth/pages/register';
-import Profile from './Home/page/profile';
-import Dashboard from './Home/page/home';
-import Protected from './auth/component/protected';
-import PublicRoute from './auth/component/public';
+import Home from './feature/auth/pages/home';
+import Login from './feature/auth/pages/login';
+import Register from './feature/auth/pages/register';
+import Profile from './feature/chat/pages/profile';
+import Dashboard from './feature/chat/pages/home';
+import Protected from './feature/auth/component/protected';
+import PublicRoute from './feature/auth/component/public';
 
 export const router = createBrowserRouter([
     {

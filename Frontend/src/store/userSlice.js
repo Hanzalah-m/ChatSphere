@@ -1,6 +1,6 @@
 // src/store/userSlice.js
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { getProfile } from '../auth/services/auth.api';
+import { getProfile } from '../feature/auth/auth.api';
 
 export const fetchProfile = createAsyncThunk(
   'user/fetchProfile',
