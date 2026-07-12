@@ -1,20 +1,26 @@
-﻿const express = require('express');
-const cookieParser = require('cookie-parser');
-const authRouter = require('./routers/auth.routes')
+﻿const express = require("express");
+const cookieParser = require("cookie-parser");
+const cors = require("cors");
+const authRouter = require("./modules/auth/auth.routes");
+const errorHandler = require("./middlewares/errorHandler");
+
 const app = express();
-const cors = require('cors');
 
 app.use(cors({
-     origin: [
+  origin: [
     "http://localhost:5173",
     "https://localhost:5170"
   ],
-    credentials: true
-}))
+  credentials: true
+}));
 
 app.use(express.json());
 app.use(cookieParser());
 
-app.use('/api/auth', authRouter);
+// Routes
+app.use("/api/auth", authRouter);
+
+// Error handler - MUST be last, after all routes
+app.use(errorHandler);
 
 module.exports = app;
