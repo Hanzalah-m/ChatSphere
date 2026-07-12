@@ -75,7 +75,11 @@ const getProfile = async (userId) => {
 };
 
 const updateProfilePicture = async (userId, file) => {
-    const imageUrl = await uploadToCloudinary(file);
+    if (!file || !file.path) {
+        throw new ApiError(400, "No file provided");
+    }
+
+    const imageUrl = await uploadToCloudinary(file.path);
 
     const user = await userModel.findByIdAndUpdate(
         userId,
@@ -90,9 +94,33 @@ const updateProfilePicture = async (userId, file) => {
     return user;
 };
 
+const updateProfile = async (userId, { name, email, username }) => {
+    const updateData = {};
+    if (name !== undefined) updateData.name = name;
+    if (email !== undefined) updateData.email = email;
+    if (username !== undefined) updateData.username = username;
+
+    const user = await userModel.findByIdAndUpdate(
+        userId,
+        updateData,
+        {
+            new: true,
+            runValidators: true
+        }
+    ).select("-password");
+
+    if (!user) {
+        throw new ApiError(404, "User not found");
+    }
+
+    return user;
+};
+
+
 module.exports = {
     register,
     login,
     getProfile,
-    updateProfilePicture
+    updateProfilePicture,
+    updateProfile
 };

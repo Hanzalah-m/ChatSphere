@@ -80,15 +80,33 @@ const getProfile = async (req, res, next) => {
 
 const updateProfilePicture = async (req, res, next) => {
   try {
-    if (!req.file) {
-      throw new ApiError(400, "No file uploaded");
-    }
-
-    const user = await authService.updateProfilePicture(req.user.id, req.file.path);
+    const user = await authService.updateProfilePicture(req.user.id, req.file);
 
     res.json({
       success: true,
       message: "Profile picture updated successfully",
+      user: formatUser(user)
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+const updateProfile = async (req, res, next) => {
+  try {
+
+    if (!req.user || !req.user.id) {
+      return res.status(401).json({ success: false, message: "Unauthorized" });
+    }
+
+
+    const { name, email, username } = req.body;
+
+    const user = await authService.updateProfile(req.user.id, { name, email, username });
+
+    res.json({
+      success: true,
+      message: "Profile updated successfully",
       user: formatUser(user)
     });
   } catch (error) {
@@ -101,5 +119,6 @@ module.exports = {
   loginUser,
   logoutUser,
   getProfile,
-  updateProfilePicture
+  updateProfilePicture,
+  updateProfile
 };
