@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom"; // Added useNavigate
-import { useAuth } from "../../auth/hooks/useAuth"; // Adjust path if needed
+import { Link, useNavigate } from "react-router-dom";
+import { useAuth } from "../../auth/hooks/useAuth";
 
 // ── Mock Data ─────────────────────────────────────────────────────────────────
 const CONTACTS = [
@@ -16,12 +16,18 @@ const STATUS_COLOR = { online: "bg-[#22C55E]", away: "bg-amber-400", offline: "b
 const STATUS_LABEL = { online: "Online", away: "Away", offline: "Offline" };
 
 // ── Small Components ──────────────────────────────────────────────────────────
-function Avatar({ initials, gradient, size = "md", status }) {
+// UPDATED: Added profilePic prop and overflow-hidden for image
+function Avatar({ initials, gradient, size = "md", status, profilePic }) {
   const sizes = { sm: "w-8 h-8 text-[10px]", md: "w-10 h-10 text-xs", lg: "w-12 h-12 text-sm" };
   const dotSizes = { sm: "w-2.5 h-2.5 border-[1.5px]", md: "w-3 h-3 border-2", lg: "w-3.5 h-3.5 border-2" };
   return (
     <div className="relative flex-shrink-0">
-      <div className={`${sizes[size]} rounded-full bg-gradient-to-br ${gradient} flex items-center justify-center font-bold text-white`}>{initials}</div>
+      <div className={`${sizes[size]} rounded-full bg-gradient-to-br ${gradient} flex items-center justify-center font-bold text-white overflow-hidden`}>
+        {profilePic 
+          ? <img src={profilePic} alt="avatar" className="w-full h-full object-cover" />
+          : initials
+        }
+      </div>
       {status && <span className={`absolute bottom-0 right-0 ${dotSizes[size]} rounded-full ${STATUS_COLOR[status]} border-[#0F172A]`} />}
     </div>
   );
@@ -63,8 +69,9 @@ function SettingsPanel({ onClose, onLogout, currentUser }) {
       </div>
 
       <div className="flex-1 overflow-y-auto px-4 py-5 flex flex-col gap-4">
+        {/* UPDATED: Passed profilePicture prop */}
         <div className="rounded-2xl border border-[#60A5FA]/10 bg-[#1E293B]/60 p-4 flex items-center gap-3">
-          <Avatar initials={userInitials} gradient="from-[#2563EB] to-[#60A5FA]" size="md" status="online" />
+          <Avatar initials={userInitials} gradient="from-[#2563EB] to-[#60A5FA]" size="md" status="online" profilePic={currentUser?.profilePicture} />
           <div className="min-w-0">
             <p className="text-sm font-semibold text-[#F8FAFC] truncate">{currentUser?.name || "Loading..."}</p>
             <p className="text-xs text-[#94A3B8]">Your profile and account settings</p>
@@ -73,12 +80,7 @@ function SettingsPanel({ onClose, onLogout, currentUser }) {
 
         <div className="rounded-2xl border border-[#60A5FA]/10 bg-[#1E293B]/50 overflow-hidden">
           {menuItems.map((item) => (
-            <Link
-              to="/profile"
-              key={item.label}
-              onClick={onClose}
-              className="flex items-center gap-4 px-4 py-3 hover:bg-white/5 transition-colors"
-            >
+            <Link to="/profile" key={item.label} onClick={onClose} className="flex items-center gap-4 px-4 py-3 hover:bg-white/5 transition-colors">
               <span className="text-xl w-8 text-center">{item.icon}</span>
               <div className="flex-1">
                 <p className="text-sm font-semibold text-[#F8FAFC]">{item.label}</p>
@@ -88,10 +90,7 @@ function SettingsPanel({ onClose, onLogout, currentUser }) {
           ))}
         </div>
 
-        <button
-          onClick={onLogout}
-          className="flex items-center justify-center gap-2 px-4 py-3 rounded-xl border border-red-500/20 bg-red-500/10 text-red-400 hover:bg-red-500/20 transition-colors"
-        >
+        <button onClick={onLogout} className="flex items-center justify-center gap-2 px-4 py-3 rounded-xl border border-red-500/20 bg-red-500/10 text-red-400 hover:bg-red-500/20 transition-colors">
           <span className="text-lg">⏻</span>
           <span className="text-sm font-semibold">Log out</span>
         </button>
@@ -108,7 +107,6 @@ function Sidebar({ contacts, activeId, onSelect, search, setSearch, collapsed, s
   return (
     <aside className={`flex flex-col bg-[#0a1628] border-r border-[#60A5FA]/10 transition-all duration-300 flex-shrink-0 ${collapsed ? "w-0 overflow-hidden md:w-[68px]" : "w-full md:w-[280px] lg:w-[300px]"}`}>
       
-      {/* Sidebar header */}
       <div className="flex items-center justify-between px-4 h-16 border-b border-[#60A5FA]/10 flex-shrink-0">
         {!collapsed && (
           <div className="flex items-center gap-2.5">
@@ -123,7 +121,6 @@ function Sidebar({ contacts, activeId, onSelect, search, setSearch, collapsed, s
         </button>
       </div>
 
-      {/* Search */}
       {!collapsed && (
         <div className="px-3 py-3 border-b border-[#60A5FA]/08 flex-shrink-0">
           <div className="relative">
@@ -135,7 +132,6 @@ function Sidebar({ contacts, activeId, onSelect, search, setSearch, collapsed, s
         </div>
       )}
 
-      {/* Contacts list */}
       <div className="flex-1 overflow-y-auto py-2 scrollbar-hide">
         {!collapsed && (<p className="px-4 py-2 text-[10px] font-bold uppercase tracking-widest text-[#475569]">Messages {filtered.length > 0 && `· ${filtered.length}`}</p>)}
         {filtered.map((c) => (
@@ -157,16 +153,17 @@ function Sidebar({ contacts, activeId, onSelect, search, setSearch, collapsed, s
         ))}
       </div>
 
-      {/* Bottom user strip */}
       <div className={`relative border-t border-[#60A5FA]/10 p-3 flex-shrink-0 ${collapsed ? "flex justify-center" : ""}`}>
         {collapsed ? (
           <Link to="/profile" title="Go to Profile">
-            <Avatar initials={userInitials} gradient="from-[#2563EB] to-[#60A5FA]" size="md" status="online" />
+            {/* UPDATED: Passed profilePicture prop (Collapsed) */}
+            <Avatar initials={userInitials} gradient="from-[#2563EB] to-[#60A5FA]" size="md" status="online" profilePic={currentUser?.profilePicture} />
           </Link>
         ) : (
           <div className="flex items-center gap-3">
             <Link to="/profile" title="Go to Profile" className="flex items-center gap-3 flex-1 min-w-0 group">
-              <Avatar initials={userInitials} gradient="from-[#2563EB] to-[#60A5FA]" size="md" status="online" />
+              {/* UPDATED: Passed profilePicture prop (Expanded) */}
+              <Avatar initials={userInitials} gradient="from-[#2563EB] to-[#60A5FA]" size="md" status="online" profilePic={currentUser?.profilePicture} />
               <div className="flex-1 min-w-0">
                 <p className="text-sm font-semibold text-[#F8FAFC] truncate group-hover:text-[#60A5FA] transition-colors">{currentUser?.name || "Loading..."}</p>
                 <p className="text-xs text-[#22C55E]">● Online</p>
@@ -294,7 +291,9 @@ function InfoPanel({ contact, onClose }) {
       </div>
       <div className="flex-1 overflow-y-auto scrollbar-hide py-6 px-5 flex flex-col gap-6">
         <div className="flex flex-col items-center gap-3 text-center">
-          <div className={`w-20 h-20 rounded-2xl bg-gradient-to-br ${contact.gradient} flex items-center justify-center text-2xl font-bold text-white shadow-xl`}>{contact.initials}</div>
+          <div className={`w-20 h-20 rounded-2xl bg-gradient-to-br ${contact.gradient} flex items-center justify-center text-2xl font-bold text-white shadow-xl overflow-hidden`}>
+            {contact.initials}
+          </div>
           <div><h3 className="text-[#F8FAFC] font-bold text-lg">{contact.name}</h3><p className={`text-sm font-medium mt-0.5 ${contact.status === "online" ? "text-[#22C55E]" : contact.status === "away" ? "text-amber-400" : "text-[#475569]"}`}>● {STATUS_LABEL[contact.status]}</p></div>
           <div className="flex gap-2 mt-1">
             <button className="flex items-center gap-1.5 text-xs font-semibold text-[#60A5FA] border border-[#60A5FA]/20 hover:bg-[#2563EB]/10 px-3 py-1.5 rounded-lg transition-all"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.56 1.18h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.72a16 16 0 0 0 6.37 6.37l.92-.91a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>Call</button>
@@ -317,7 +316,7 @@ function InfoPanel({ contact, onClose }) {
 
 // ── Main ChatPage ─────────────────────────────────────────────────────────────
 export default function ChatPage() {
-  const { user, handleLogout } = useAuth(); // Get user and handleLogout from Redux
+  const { user, handleLogout } = useAuth();
   const navigate = useNavigate();
   
   const [contacts, setContacts] = useState(CONTACTS);
@@ -343,10 +342,9 @@ export default function ChatPage() {
     setActiveContact((prev) => prev ? { ...prev } : prev);
   };
 
-  // Handle Logout logic
   const onLogout = async () => {
     await handleLogout();
-    navigate('/login'); // Redirect to login after logout
+    navigate('/login');
   };
 
   const openSettings = () => {

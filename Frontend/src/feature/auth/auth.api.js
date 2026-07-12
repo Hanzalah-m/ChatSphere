@@ -45,4 +45,26 @@ async function getProfile() {
     
 }
 
-export{registerUser,loginUser,logoutUser,getProfile}
+async function updateProfilePicture(imageFile) {
+    try {
+        const formData = new FormData();
+        formData.append('image', imageFile);
+
+        const response = await api.put('/api/auth/profile/picture', formData);
+        return response.data;
+    } catch (error) {
+        throw error.response ? error.response.data : new Error("Network Error");
+    }
+
+}
+
+async function updateProfile({name,email,username}) {
+    try{
+        const response = await api.put('/api/auth/profile',{name,email,username});
+        return response.data;
+    }catch(error){
+        throw error.response ? error.response.data : new Error("Network Error");
+    }
+}
+
+export{registerUser,loginUser,logoutUser,getProfile,updateProfilePicture,updateProfile}

@@ -1,7 +1,7 @@
 // src/features/auth/hooks/useAuth.js
 import { useDispatch, useSelector } from 'react-redux';
 import { setUser, clearUser, setLoading } from '../../../store/userSlice';
-import { loginUser, registerUser, logoutUser, getProfile } from '../auth.api';
+import { loginUser, registerUser, logoutUser, getProfile,updateProfile,updateProfilePicture } from '../auth.api';
 
 const useAuth = () => {
     const dispatch = useDispatch();
@@ -85,13 +85,57 @@ const useAuth = () => {
         }
     };
 
+    const handleUpdateProfilePicture = async (imageFile) => {
+        dispatch(setLoading(true));
+        try {
+            const userData = await updateProfilePicture(imageFile);
+            dispatch(setUser(userData?.user ?? userData));
+            return {
+                success: true,
+                user: userData?.user ?? userData
+            }
+        } catch (error) {
+            console.error("Updating profile picture failed:", error);
+            return {
+                success: false,
+                message: error?.message || "Failed to update profile picture. Please try again."
+            }
+        }
+        finally {
+            dispatch(setLoading(false));
+        }
+    }
+
+    const handleUpdateProfile = async ({ name, email, username }) => {
+        dispatch(setLoading(true));
+        try {
+            const userData = await updateProfile({ name, email, username });
+            dispatch(setUser(userData?.user ?? userData));
+            return {
+                success: true,
+                user: userData?.user ?? userData
+            }
+        } catch (error) {
+            console.error("Updating profile failed:", error);
+            return {
+                success: false,
+                message: error?.message || "Failed to update profile picture. Please try again."
+            }
+        }
+        finally {
+            dispatch(setLoading(false));
+        }
+    }
+
     return {
         user,
         loading,
         handleLogin,
         handleRegister,
         handleLogout,
-        fetchCurrentUser
+        fetchCurrentUser,
+        handleUpdateProfilePicture,
+        handleUpdateProfile
     }
 }
 
