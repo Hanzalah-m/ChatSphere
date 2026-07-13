@@ -5,7 +5,7 @@ import { useAuth } from "../../auth/hooks/useAuth";
 // ── Shared helpers ────────────────────────────────────────────────────────────
 function SectionCard({ title, description, children }) {
   return (
-    <div className="bg-gradient-to-br from-[#1E293B]/90 to-[#0d1b2e]/90 backdrop-blur-xl border border-[#60A5FA]/15 rounded-2xl p-6 md:p-8">
+    <div className="bg-linear-to-br from-[#1E293B]/90 to-[#0d1b2e]/90 backdrop-blur-xl border border-[#60A5FA]/15 rounded-2xl p-6 md:p-8">
       <div className="mb-6">
         <h2 className="text-[#F8FAFC] font-bold text-lg mb-1">{title}</h2>
         {description && <p className="text-[#94A3B8] text-sm">{description}</p>}
@@ -57,9 +57,9 @@ function ToggleSwitch({ checked, onChange }) {
     <button
       type="button"
       onClick={() => onChange(!checked)}
-      className={`relative w-11 h-6 rounded-full transition-all duration-300 flex-shrink-0 ${
+      className={`relative w-11 h-6 rounded-full transition-all duration-300 shrink-0 ${
         checked
-          ? "bg-gradient-to-r from-[#2563EB] to-[#3B82F6] shadow-lg shadow-blue-500/30"
+          ? "bg-linear-to-r from-[#2563EB] to-[#3B82F6] shadow-lg shadow-blue-500/30"
           : "bg-[#1E293B] border border-[#60A5FA]/20"
       }`}
     >
@@ -74,7 +74,7 @@ function SaveButton({ loading, label = "Save Changes", onClick }) {
       type={onClick ? "button" : "submit"}
       onClick={onClick}
       disabled={loading}
-      className="inline-flex items-center gap-2 bg-gradient-to-r from-[#2563EB] to-[#3B82F6] hover:from-[#1D4ED8] hover:to-[#2563EB] disabled:opacity-60 disabled:cursor-not-allowed text-white font-semibold px-6 py-2.5 rounded-xl shadow-lg shadow-blue-500/25 hover:shadow-blue-500/40 transition-all duration-200 hover:-translate-y-px text-sm"
+      className="inline-flex items-center gap-2 bg-linear-to-r from-[#2563EB] to-[#3B82F6] hover:from-[#1D4ED8] hover:to-[#2563EB] disabled:opacity-60 disabled:cursor-not-allowed text-white font-semibold px-6 py-2.5 rounded-xl shadow-lg shadow-blue-500/25 hover:shadow-blue-500/40 transition-all duration-200 hover:-translate-y-px text-sm"
     >
       {loading ? (
         <>
@@ -115,7 +115,7 @@ function Toast({ message, type = "success" }) {
 
 // ── Sidebar Nav ───────────────────────────────────────────────────────────────
 const NAV_ITEMS = [
-  { id: "profile",    label: "Profile",       icon: <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg> },
+  { id: "profile",   label: "Profile",       icon: <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg> },
   { id: "account",   label: "Account",       icon: <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93A10 10 0 0 0 4.93 19.07M19.07 19.07A10 10 0 0 0 4.93 4.93"/></svg> },
   { id: "security",  label: "Security",      icon: <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg> },
   { id: "notifs",    label: "Notifications", icon: <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg> },
@@ -214,7 +214,7 @@ function ProfileTab({ toast, currentUser }) {
     <div className="flex flex-col gap-6">
       <SectionCard title="Profile Picture" description="Upload a new photo. JPG, PNG or GIF · Max 5 MB.">
         <div className="flex flex-col sm:flex-row items-start sm:items-center gap-6">
-          <div className="relative group cursor-pointer flex-shrink-0" onClick={() => fileRef.current?.click()}>
+          <div className="relative group cursor-pointer shrink-0" onClick={() => fileRef.current?.click()}>
             <div className="w-24 h-24 rounded-2xl bg-gradient-to-br from-[#2563EB] to-[#60A5FA] flex items-center justify-center text-3xl font-bold text-white shadow-xl shadow-blue-500/30 overflow-hidden">
               {avatarPreview
                 ? <img src={avatarPreview} alt="avatar" className="w-full h-full object-cover" />
@@ -545,7 +545,7 @@ export default function ProfilePage() {
       {/* Navbar */}
       <nav className="sticky top-0 z-40 bg-[#0F172A]/85 backdrop-blur-xl border-b border-[#60A5FA]/10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between gap-4">
-          <Link to="/dashboard" className="flex items-center gap-2.5 flex-shrink-0">
+          <Link to="/dashboard" className="flex items-center gap-2.5 shrink-0">
             <div className="w-8 h-8 rounded-xl bg-gradient-to-br from-[#2563EB] to-[#60A5FA] flex items-center justify-center shadow-lg shadow-blue-500/30">
               <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
             </div>
@@ -577,7 +577,7 @@ export default function ProfilePage() {
       {/* Body */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 py-8">
         <div className="flex gap-6 lg:gap-8 relative">
-          <aside className="hidden lg:flex flex-col gap-1 w-56 flex-shrink-0 sticky top-24 self-start">
+          <aside className="hidden lg:flex flex-col gap-1 w-56 shrink-0 sticky top-24 self-start">
             <p className="text-[#94A3B8] text-[10px] font-bold uppercase tracking-widest px-3 mb-3">Settings</p>
             {NAV_ITEMS.map((item) => (
               <button key={item.id} onClick={() => setActiveTab(item.id)}

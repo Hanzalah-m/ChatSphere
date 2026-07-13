@@ -21,8 +21,8 @@ function Avatar({ initials, gradient, size = "md", status, profilePic }) {
   const sizes = { sm: "w-8 h-8 text-[10px]", md: "w-10 h-10 text-xs", lg: "w-12 h-12 text-sm" };
   const dotSizes = { sm: "w-2.5 h-2.5 border-[1.5px]", md: "w-3 h-3 border-2", lg: "w-3.5 h-3.5 border-2" };
   return (
-    <div className="relative flex-shrink-0">
-      <div className={`${sizes[size]} rounded-full bg-gradient-to-br ${gradient} flex items-center justify-center font-bold text-white overflow-hidden`}>
+    <div className="relative shrink-0">
+      <div className={`${sizes[size]} rounded-full bg-linear-to-br ${gradient} flex items-center justify-center font-bold text-white overflow-hidden`}>
         {profilePic 
           ? <img src={profilePic} alt="avatar" className="w-full h-full object-cover" />
           : initials
@@ -36,7 +36,7 @@ function Avatar({ initials, gradient, size = "md", status, profilePic }) {
 function TypingIndicator() {
   return (
     <div className="flex items-end gap-2 px-4 py-1">
-      <div className="w-8 h-8 rounded-full bg-gradient-to-br from-violet-500 to-pink-500 flex items-center justify-center text-[10px] font-bold text-white flex-shrink-0">SJ</div>
+      <div className="w-8 h-8 rounded-full bg-linear-to-br from-violet-500 to-pink-500 flex items-center justify-center text-[10px] font-bold text-white shrink-0">SJ</div>
       <div className="bg-[#1E293B] border border-[#60A5FA]/10 rounded-2xl rounded-bl-sm px-4 py-3 flex items-center gap-1">
         {[0, 1, 2].map((i) => (<span key={i} className="w-1.5 h-1.5 rounded-full bg-[#94A3B8] animate-bounce" style={{ animationDelay: `${i * 0.15}s`, animationDuration: "1s" }} />))}
       </div>
@@ -58,7 +58,7 @@ function SettingsPanel({ onClose, onLogout, currentUser }) {
 
   return (
     <div className="flex-1 flex flex-col min-w-0 min-h-0 bg-[#0a1628]/80">
-      <div className="flex items-center justify-between px-4 h-16 border-b border-[#60A5FA]/10 bg-[#0a1628]/60 backdrop-blur-sm flex-shrink-0">
+      <div className="flex items-center justify-between px-4 h-16 border-b border-[#60A5FA]/10 bg-[#0a1628]/60 backdrop-blur-sm shrink-0">
         <div>
           <p className="text-sm font-bold text-[#F8FAFC]">Settings</p>
           <p className="text-xs text-[#94A3B8]">Manage your account and preferences</p>
@@ -105,24 +105,24 @@ function Sidebar({ contacts, activeId, onSelect, search, setSearch, collapsed, s
   const userInitials = currentUser?.name ? currentUser.name.split(" ").map(n => n[0]).join("").slice(0,2).toUpperCase() : 'U';
 
   return (
-    <aside className={`flex flex-col bg-[#0a1628] border-r border-[#60A5FA]/10 transition-all duration-300 flex-shrink-0 ${collapsed ? "w-0 overflow-hidden md:w-[68px]" : "w-full md:w-[280px] lg:w-[300px]"}`}>
+    <aside className={`flex flex-col bg-[#0a1628] border-r border-[#60A5FA]/10 transition-all duration-300 shrink-0 ${collapsed ? "w-0 overflow-hidden md:w-17" : "w-full md:w-70 lg:w-75"}`}>
       
-      <div className="flex items-center justify-between px-4 h-16 border-b border-[#60A5FA]/10 flex-shrink-0">
+      <div className="flex items-center justify-between px-4 h-16 border-b border-[#60A5FA]/10 shrink-0">
         {!collapsed && (
           <div className="flex items-center gap-2.5">
-            <div className="w-7 h-7 rounded-xl bg-gradient-to-br from-[#2563EB] to-[#60A5FA] flex items-center justify-center shadow-lg shadow-blue-500/30">
+            <div className="w-7 h-7 rounded-xl bg-linear-to-br from-[#2563EB] to-[#60A5FA] flex items-center justify-center shadow-lg shadow-blue-500/30">
               <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
             </div>
             <span className="text-[#F8FAFC] font-bold text-base tracking-tight">Chat<span className="text-[#60A5FA]">Sphere</span></span>
           </div>
         )}
-        <button onClick={() => setCollapsed((v) => !v)} className="w-8 h-8 rounded-lg hover:bg-white/5 flex items-center justify-center text-[#94A3B8] hover:text-[#F8FAFC] transition-all flex-shrink-0">
+        <button onClick={() => setCollapsed((v) => !v)} className="w-8 h-8 rounded-lg hover:bg-white/5 flex items-center justify-center text-[#94A3B8] hover:text-[#F8FAFC] transition-all shrink-0">
           {collapsed ? <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="9 18 15 12 9 6"/></svg> : <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="15 18 9 12 15 6"/></svg>}
         </button>
       </div>
 
       {!collapsed && (
-        <div className="px-3 py-3 border-b border-[#60A5FA]/08 flex-shrink-0">
+        <div className="px-3 py-3 border-b border-[#60A5FA]/08 shrink-0">
           <div className="relative">
             <div className="absolute inset-y-0 left-3 flex items-center pointer-events-none">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#94A3B8" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
@@ -141,11 +141,11 @@ function Sidebar({ contacts, activeId, onSelect, search, setSearch, collapsed, s
               <div className="flex-1 min-w-0 text-left">
                 <div className="flex items-center justify-between mb-0.5">
                   <p className={`text-sm font-semibold truncate ${activeId === c.id ? "text-[#F8FAFC]" : "text-[#CBD5E1] group-hover:text-[#F8FAFC]"}`}>{c.name}</p>
-                  <span className="text-[10px] text-[#475569] flex-shrink-0 ml-2">{c.time}</span>
+                  <span className="text-[10px] text-[#475569] shrink-0 ml-2">{c.time}</span>
                 </div>
                 <div className="flex items-center justify-between">
                   <p className="text-xs text-[#475569] truncate">{c.lastMsg}</p>
-                  {c.unread > 0 && (<span className="ml-2 flex-shrink-0 w-5 h-5 bg-[#2563EB] rounded-full text-[10px] font-bold text-white flex items-center justify-center">{c.unread}</span>)}
+                  {c.unread > 0 && (<span className="ml-2 shrink-0 w-5 h-5 bg-[#2563EB] rounded-full text-[10px] font-bold text-white flex items-center justify-center">{c.unread}</span>)}
                 </div>
               </div>
             )}
@@ -153,7 +153,7 @@ function Sidebar({ contacts, activeId, onSelect, search, setSearch, collapsed, s
         ))}
       </div>
 
-      <div className={`relative border-t border-[#60A5FA]/10 p-3 flex-shrink-0 ${collapsed ? "flex justify-center" : ""}`}>
+      <div className={`relative border-t border-[#60A5FA]/10 p-3 shrink-0 ${collapsed ? "flex justify-center" : ""}`}>
         {collapsed ? (
           <Link to="/profile" title="Go to Profile">
             {/* UPDATED: Passed profilePicture prop (Collapsed) */}
@@ -185,9 +185,9 @@ function MessageBubble({ msg, showAvatar, contact }) {
   const isMe = msg.from === "me";
   return (
     <div className={`flex items-end gap-2.5 px-4 py-0.5 group ${isMe ? "flex-row-reverse" : ""}`}>
-      <div className="w-8 flex-shrink-0">{!isMe && showAvatar && <Avatar initials={contact.initials} gradient={contact.gradient} size="sm" />}</div>
+      <div className="w-8 shrink-0">{!isMe && showAvatar && <Avatar initials={contact.initials} gradient={contact.gradient} size="sm" />}</div>
       <div className={`flex flex-col max-w-[65%] ${isMe ? "items-end" : "items-start"}`}>
-        <div className={`px-4 py-2.5 rounded-2xl text-sm leading-relaxed break-words ${isMe ? "bg-gradient-to-br from-[#2563EB] to-[#3B82F6] text-white rounded-br-sm" : "bg-[#1E293B] border border-[#60A5FA]/10 text-[#F8FAFC] rounded-bl-sm"}`}>{msg.text}</div>
+        <div className={`px-4 py-2.5 rounded-2xl text-sm leading-relaxed wrap-break-words ${isMe ? "bg-linear-to-br from-[#2563EB] to-[#3B82F6] text-white rounded-br-sm" : "bg-[#1E293B] border border-[#60A5FA]/10 text-[#F8FAFC] rounded-bl-sm"}`}>{msg.text}</div>
         <div className={`flex items-center gap-1.5 mt-1 opacity-0 group-hover:opacity-100 transition-opacity duration-200 ${isMe ? "flex-row-reverse" : ""}`}>
           <span className="text-[10px] text-[#475569]">{msg.time}</span>
           {isMe && <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#60A5FA" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12"/></svg>}
@@ -202,8 +202,8 @@ function EmptyState() {
   return (
     <div className="flex-1 flex flex-col items-center justify-center gap-4 px-8 text-center">
       <div className="relative">
-        <div className="w-20 h-20 rounded-3xl bg-gradient-to-br from-[#2563EB]/20 to-[#60A5FA]/10 border border-[#60A5FA]/15 flex items-center justify-center text-4xl shadow-xl shadow-blue-500/10">💬</div>
-        <div className="absolute -bottom-1 -right-1 w-7 h-7 rounded-xl bg-gradient-to-br from-[#2563EB] to-[#60A5FA] flex items-center justify-center shadow-lg shadow-blue-500/30"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div>
+        <div className="w-20 h-20 rounded-3xl bg-linear-to-br from-[#2563EB]/20 to-[#60A5FA]/10 border border-[#60A5FA]/15 flex items-center justify-center text-4xl shadow-xl shadow-blue-500/10">💬</div>
+        <div className="absolute -bottom-1 -right-1 w-7 h-7 rounded-xl bg-linear-to-br from-[#2563EB] to-[#60A5FA] flex items-center justify-center shadow-lg shadow-blue-500/30"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg></div>
       </div>
       <div>
         <h3 className="text-[#F8FAFC] font-bold text-xl mb-2">No conversation selected</h3>
@@ -243,7 +243,7 @@ function ChatArea({ contact, messages, onSend, showInfo, setShowInfo, mobileBack
 
   return (
     <div className="flex-1 flex flex-col min-w-0 min-h-0">
-      <div className="flex items-center justify-between px-4 h-16 border-b border-[#60A5FA]/10 bg-[#0a1628]/60 backdrop-blur-sm flex-shrink-0">
+      <div className="flex items-center justify-between px-4 h-16 border-b border-[#60A5FA]/10 bg-[#0a1628]/60 backdrop-blur-sm shrink-0">
         <div className="flex items-center gap-3">
           <button onClick={mobileBack} className="md:hidden w-8 h-8 rounded-lg hover:bg-white/5 flex items-center justify-center text-[#94A3B8] mr-1"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="15 18 9 12 15 6"/></svg></button>
           <Avatar initials={contact.initials} gradient={contact.gradient} size="md" status={contact.status} />
@@ -266,13 +266,13 @@ function ChatArea({ contact, messages, onSend, showInfo, setShowInfo, mobileBack
         <div ref={bottomRef} />
       </div>
 
-      <div className="border-t border-[#60A5FA]/10 px-4 py-3 bg-[#0a1628]/60 backdrop-blur-sm flex-shrink-0">
+      <div className="border-t border-[#60A5FA]/10 px-4 py-3 bg-[#0a1628]/60 backdrop-blur-sm shrink-0">
         {showEmoji && (<div className="mb-3 p-3 bg-[#1E293B] border border-[#60A5FA]/15 rounded-2xl flex flex-wrap gap-2">{EMOJIS.map((e) => (<button key={e} onClick={() => { setInput((v) => v + e); setShowEmoji(false); inputRef.current?.focus(); }} className="text-xl hover:scale-125 transition-transform duration-150">{e}</button>))}</div>)}
         <div className="flex items-end gap-2">
-          <button className="w-9 h-9 rounded-xl hover:bg-white/5 flex items-center justify-center text-[#94A3B8] hover:text-[#60A5FA] transition-all flex-shrink-0" title="Attach file"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48"/></svg></button>
+          <button className="w-9 h-9 rounded-xl hover:bg-white/5 flex items-center justify-center text-[#94A3B8] hover:text-[#60A5FA] transition-all shrink-0" title="Attach file"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48"/></svg></button>
           <div className="flex-1 relative"><textarea ref={inputRef} value={input} onChange={(e) => setInput(e.target.value)} onKeyDown={handleKey} placeholder={`Message ${contact.name.split(" ")[0]}…`} rows={1} className="w-full bg-[#1E293B]/80 border border-[#60A5FA]/15 focus:border-[#3B82F6]/50 focus:ring-2 focus:ring-[#3B82F6]/15 rounded-2xl px-4 py-2.5 pr-10 text-sm text-[#F8FAFC] placeholder-[#475569] outline-none transition-all duration-200 resize-none leading-relaxed" style={{ maxHeight: 120 }} /></div>
-          <button onClick={() => setShowEmoji((v) => !v)} className={`w-9 h-9 rounded-xl flex items-center justify-center transition-all flex-shrink-0 ${showEmoji ? "bg-[#2563EB]/20 text-[#60A5FA]" : "hover:bg-white/5 text-[#94A3B8] hover:text-[#60A5FA]"}`} title="Emoji"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg></button>
-          <button onClick={handleSend} disabled={!input.trim()} className="w-9 h-9 rounded-xl bg-gradient-to-br from-[#2563EB] to-[#3B82F6] disabled:opacity-40 disabled:cursor-not-allowed flex items-center justify-center shadow-lg shadow-blue-500/25 hover:shadow-blue-500/40 hover:-translate-y-px transition-all duration-200 flex-shrink-0"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg></button>
+          <button onClick={() => setShowEmoji((v) => !v)} className={`w-9 h-9 rounded-xl flex items-center justify-center transition-all shrink-0 ${showEmoji ? "bg-[#2563EB]/20 text-[#60A5FA]" : "hover:bg-white/5 text-[#94A3B8] hover:text-[#60A5FA]"}`} title="Emoji"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg></button>
+          <button onClick={handleSend} disabled={!input.trim()} className="w-9 h-9 rounded-xl bg-linear-to-br from-[#2563EB] to-[#3B82F6] disabled:opacity-40 disabled:cursor-not-allowed flex items-center justify-center shadow-lg shadow-blue-500/25 hover:shadow-blue-500/40 hover:-translate-y-px transition-all duration-200 shrink-0"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg></button>
         </div>
         <p className="text-[10px] text-[#475569] mt-2 text-center">Press Enter to send · Shift+Enter for new line</p>
       </div>
@@ -284,14 +284,14 @@ function ChatArea({ contact, messages, onSend, showInfo, setShowInfo, mobileBack
 function InfoPanel({ contact, onClose }) {
   if (!contact) return null;
   return (
-    <aside className="hidden lg:flex w-72 flex-shrink-0 flex-col border-l border-[#60A5FA]/10 bg-[#0a1628]/80">
-      <div className="flex items-center justify-between px-5 h-16 border-b border-[#60A5FA]/10 flex-shrink-0">
+    <aside className="hidden lg:flex w-72 shrink-0 flex-col border-l border-[#60A5FA]/10 bg-[#0a1628]/80">
+      <div className="flex items-center justify-between px-5 h-16 border-b border-[#60A5FA]/10 shrink-0">
         <p className="text-sm font-bold text-[#F8FAFC]">Contact Info</p>
         <button onClick={onClose} className="w-7 h-7 rounded-lg hover:bg-white/5 flex items-center justify-center text-[#94A3B8] hover:text-[#F8FAFC] transition-all"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
       </div>
       <div className="flex-1 overflow-y-auto scrollbar-hide py-6 px-5 flex flex-col gap-6">
         <div className="flex flex-col items-center gap-3 text-center">
-          <div className={`w-20 h-20 rounded-2xl bg-gradient-to-br ${contact.gradient} flex items-center justify-center text-2xl font-bold text-white shadow-xl overflow-hidden`}>
+          <div className={`w-20 h-20 rounded-2xl bg-linear-to-br ${contact.gradient} flex items-center justify-center text-2xl font-bold text-white shadow-xl overflow-hidden`}>
             {contact.initials}
           </div>
           <div><h3 className="text-[#F8FAFC] font-bold text-lg">{contact.name}</h3><p className={`text-sm font-medium mt-0.5 ${contact.status === "online" ? "text-[#22C55E]" : contact.status === "away" ? "text-amber-400" : "text-[#475569]"}`}>● {STATUS_LABEL[contact.status]}</p></div>
@@ -355,8 +355,8 @@ export default function ChatPage() {
 
   return (
     <div className="h-screen bg-[#0F172A] flex flex-col overflow-hidden">
-      <div className="pointer-events-none fixed -top-40 -left-40 w-[500px] h-[500px] rounded-full bg-[#2563EB]/10 blur-[120px]" />
-      <div className="pointer-events-none fixed bottom-0 right-0 w-[400px] h-[400px] rounded-full bg-[#3B82F6]/08 blur-[100px]" />
+      <div className="pointer-events-none fixed -top-40 -left-40 w-125 h-125 rounded-full bg-[#2563EB]/10 blur-[120px]" />
+      <div className="pointer-events-none fixed bottom-0 right-0 w-100 h-100 rounded-full bg-[#3B82F6]/08 blur-[100px]" />
 
       <div className="flex flex-1 min-h-0 relative">
         <div className={`${showMobileChat ? "hidden md:flex" : "flex"} flex-col h-full`} style={{ flexShrink: 0 }}>
