@@ -114,11 +114,30 @@ const updateProfile = async (req, res, next) => {
   }
 };
 
+const deleteProfilePicture = async (req, res, next) => {
+  try {
+    if (!req.user || !req.user.id) {
+      return res.status(401).json({ success: false, message: "Unauthorized" });
+    }
+    const user = await authService.deleteProfilePicture(req.user.id);
+
+    res.json({
+      success: true,
+      message: "Profile picture deleted successfully",
+      user: formatUser(user)
+    });
+  }
+  catch (error) {
+    next(error);
+  }
+};
+
 module.exports = {
   registerUser,
   loginUser,
   logoutUser,
   getProfile,
   updateProfilePicture,
-  updateProfile
+  updateProfile,
+  deleteProfilePicture
 };

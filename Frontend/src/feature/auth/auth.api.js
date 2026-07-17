@@ -67,4 +67,14 @@ async function updateProfile({name,email,username}) {
     }
 }
 
-export{registerUser,loginUser,logoutUser,getProfile,updateProfilePicture,updateProfile}
+async function deleteProfilePicture() {
+    try {
+        const response = await api.delete('/api/auth/profile/picture');
+        return response.data;
+    } catch (error) {
+        throw error.response ? error.response.data : new Error("Network Error");
+    }
+
+}
+
+export {registerUser,loginUser,logoutUser,getProfile,updateProfilePicture,updateProfile,deleteProfilePicture}

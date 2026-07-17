@@ -1,7 +1,7 @@
 // src/features/auth/hooks/useAuth.js
 import { useDispatch, useSelector } from 'react-redux';
 import { setUser, clearUser, setLoading } from '../../../store/userSlice';
-import { loginUser, registerUser, logoutUser, getProfile,updateProfile,updateProfilePicture } from '../auth.api';
+import { loginUser, registerUser, logoutUser, getProfile, updateProfile, updateProfilePicture, deleteProfilePicture } from '../auth.api';
 
 const useAuth = () => {
     const dispatch = useDispatch();
@@ -127,6 +127,28 @@ const useAuth = () => {
         }
     }
 
+    const handleDeleteProfilePicture = async () => {
+        dispatch(setLoading(true));
+        try {
+            const userData = await deleteProfilePicture();
+            dispatch(setUser(userData?.user ?? userData));
+            return {
+                success: true,
+                user: userData?.user ?? userData
+            }
+        }
+        catch (error) {
+            console.error("Deleting profile picture failed:", error);
+            return {
+                success: false,
+                message: error?.message || "Failed to delete profile picture. Please try again."
+            }
+        }
+        finally {
+            dispatch(setLoading(false));
+        }   
+    }
+
     return {
         user,
         loading,
@@ -135,7 +157,8 @@ const useAuth = () => {
         handleLogout,
         fetchCurrentUser,
         handleUpdateProfilePicture,
-        handleUpdateProfile
+        handleUpdateProfile,
+        handleDeleteProfilePicture
     }
 }
 

@@ -30,13 +30,12 @@ function InputField({ label, name, type = "text", value, onChange, placeholder, 
           onChange={onChange}
           placeholder={placeholder}
           readOnly={readOnly}
-          className={`w-full bg-[#0d1b2e]/80 border ${
-            error
-              ? "border-red-500/50 focus:border-red-500/70 focus:ring-red-500/20"
-              : readOnly
+          className={`w-full bg-[#0d1b2e]/80 border ${error
+            ? "border-red-500/50 focus:border-red-500/70 focus:ring-red-500/20"
+            : readOnly
               ? "border-[#60A5FA]/08 opacity-50 cursor-not-allowed"
               : "border-[#60A5FA]/15 focus:border-[#3B82F6]/60 focus:ring-[#3B82F6]/20"
-          } focus:ring-2 rounded-xl ${icon ? "pl-10" : "pl-4"} pr-4 py-3 text-sm text-[#F8FAFC] placeholder-[#475569] outline-none transition-all duration-200`}
+            } focus:ring-2 rounded-xl ${icon ? "pl-10" : "pl-4"} pr-4 py-3 text-sm text-[#F8FAFC] placeholder-[#475569] outline-none transition-all duration-200`}
         />
       </div>
       {hint && !error && <p className="text-[#475569] text-xs">{hint}</p>}
@@ -57,11 +56,10 @@ function ToggleSwitch({ checked, onChange }) {
     <button
       type="button"
       onClick={() => onChange(!checked)}
-      className={`relative w-11 h-6 rounded-full transition-all duration-300 shrink-0 ${
-        checked
-          ? "bg-linear-to-r from-[#2563EB] to-[#3B82F6] shadow-lg shadow-blue-500/30"
-          : "bg-[#1E293B] border border-[#60A5FA]/20"
-      }`}
+      className={`relative w-11 h-6 rounded-full transition-all duration-300 shrink-0 ${checked
+        ? "bg-linear-to-r from-[#2563EB] to-[#3B82F6] shadow-lg shadow-blue-500/30"
+        : "bg-[#1E293B] border border-[#60A5FA]/20"
+        }`}
     >
       <span className={`absolute top-0.5 left-0.5 w-5 h-5 rounded-full bg-white shadow-md transition-transform duration-300 ${checked ? "translate-x-5" : "translate-x-0"}`} />
     </button>
@@ -115,24 +113,25 @@ function Toast({ message, type = "success" }) {
 
 // ── Sidebar Nav ───────────────────────────────────────────────────────────────
 const NAV_ITEMS = [
-  { id: "profile",   label: "Profile",       icon: <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg> },
-  { id: "account",   label: "Account",       icon: <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93A10 10 0 0 0 4.93 19.07M19.07 19.07A10 10 0 0 0 4.93 4.93"/></svg> },
-  { id: "security",  label: "Security",      icon: <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg> },
-  { id: "notifs",    label: "Notifications", icon: <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg> },
-  { id: "privacy",   label: "Privacy",       icon: <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg> },
-  { id: "appearance",label: "Appearance",    icon: <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="4"/><line x1="21.17" y1="8" x2="12" y2="8"/><line x1="3.95" y1="6.06" x2="8.54" y2="14"/><line x1="10.88" y1="21.94" x2="15.46" y2="14"/></svg> },
-  { id: "danger",    label: "Danger Zone",   icon: <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>, danger: true },
+  { id: "profile", label: "Profile", icon: <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" /><circle cx="12" cy="7" r="4" /></svg> },
+  { id: "account", label: "Account", icon: <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="3" /><path d="M19.07 4.93A10 10 0 0 0 4.93 19.07M19.07 19.07A10 10 0 0 0 4.93 4.93" /></svg> },
+  { id: "security", label: "Security", icon: <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2" /><path d="M7 11V7a5 5 0 0 1 10 0v4" /></svg> },
+  { id: "notifs", label: "Notifications", icon: <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9" /><path d="M13.73 21a2 2 0 0 1-3.46 0" /></svg> },
+  { id: "privacy", label: "Privacy", icon: <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" /></svg> },
+  { id: "appearance", label: "Appearance", icon: <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10" /><circle cx="12" cy="12" r="4" /><line x1="21.17" y1="8" x2="12" y2="8" /><line x1="3.95" y1="6.06" x2="8.54" y2="14" /><line x1="10.88" y1="21.94" x2="15.46" y2="14" /></svg> },
+  { id: "danger", label: "Danger Zone", icon: <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z" /><line x1="12" y1="9" x2="12" y2="13" /><line x1="12" y1="17" x2="12.01" y2="17" /></svg>, danger: true },
 ];
 
 // ── Tab: Profile ──────────────────────────────────────────────────────────────
 function ProfileTab({ toast, currentUser }) {
-  const { handleUpdateProfile, handleUpdateProfilePicture } = useAuth();
+  const { handleUpdateProfile, handleUpdateProfilePicture, handleDeleteProfilePicture } = useAuth();
 
   const [profileLoading, setProfileLoading] = useState(false);
-  const [avatarLoading,  setAvatarLoading]  = useState(false);
+  const [avatarLoading, setAvatarLoading] = useState(false);
 
-  const [avatarFile,    setAvatarFile]    = useState(null);
-  
+  const [avatarFile, setAvatarFile] = useState(null);
+  const [pendingAvatarRemoval, setPendingAvatarRemoval] = useState(false);
+
   // 2. FIXED: Changed profilePic to profilePicture
   const [avatarPreview, setAvatarPreview] = useState(currentUser?.profilePicture || null);
   const fileRef = useRef();
@@ -145,7 +144,7 @@ function ProfileTab({ toast, currentUser }) {
   }, [currentUser?.profilePicture]);
 
   const [form, setForm] = useState({
-    name:     currentUser?.name     || "",
+    name: currentUser?.name || "",
     username: currentUser?.username || "",
   });
 
@@ -163,6 +162,7 @@ function ProfileTab({ toast, currentUser }) {
       return;
     }
     setAvatarFile(file);
+    setPendingAvatarRemoval(false);
     setAvatarPreview(URL.createObjectURL(file));
   };
 
@@ -175,13 +175,13 @@ function ProfileTab({ toast, currentUser }) {
     try {
       const result = await handleUpdateProfilePicture(avatarFile);
       toast(result?.message || "Profile picture updated!");
-      
+
       // 4. FIXED: Replace blob URL with actual Cloudinary URL from backend response
       if (result?.user?.profilePicture) {
         setAvatarPreview(result.user.profilePicture);
       }
 
-      setAvatarFile(null); 
+      setAvatarFile(null);
     } catch (err) {
       toast(err?.message || "Failed to upload picture.", "error");
       // 5. FIXED: Correct fallback name
@@ -192,15 +192,23 @@ function ProfileTab({ toast, currentUser }) {
   };
 
   const handleRemovePhoto = () => {
-    setAvatarFile(null);
-    setAvatarPreview(null);
-    if (fileRef.current) fileRef.current.value = "";
+    setPendingAvatarRemoval(true);
+    toast("Profile picture will be removed after you save changes.");
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setProfileLoading(true);
     try {
+      if (pendingAvatarRemoval) {
+        const deleteResult = await handleDeleteProfilePicture();
+        if (!deleteResult?.success) {
+          throw new Error(deleteResult?.message || "Failed to remove profile picture.");
+        }
+        setPendingAvatarRemoval(false);
+        setAvatarPreview(null);
+      }
+
       const result = await handleUpdateProfile({ name: form.name, username: form.username });
       toast(result?.message || "Profile updated successfully!");
     } catch (err) {
@@ -215,15 +223,15 @@ function ProfileTab({ toast, currentUser }) {
       <SectionCard title="Profile Picture" description="Upload a new photo. JPG, PNG or GIF · Max 5 MB.">
         <div className="flex flex-col sm:flex-row items-start sm:items-center gap-6">
           <div className="relative group cursor-pointer shrink-0" onClick={() => fileRef.current?.click()}>
-            <div className="w-24 h-24 rounded-2xl bg-gradient-to-br from-[#2563EB] to-[#60A5FA] flex items-center justify-center text-3xl font-bold text-white shadow-xl shadow-blue-500/30 overflow-hidden">
+            <div className="w-24 h-24 rounded-2xl bg-linear-to-br from-[#2563EB] to-[#60A5FA] flex items-center justify-center text-3xl font-bold text-white shadow-xl shadow-blue-500/30 overflow-hidden">
               {avatarPreview
                 ? <img src={avatarPreview} alt="avatar" className="w-full h-full object-cover" />
                 : userInitials}
             </div>
             <div className="absolute inset-0 rounded-2xl bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
               <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/>
-                <circle cx="12" cy="13" r="4"/>
+                <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z" />
+                <circle cx="12" cy="13" r="4" />
               </svg>
             </div>
             <span className="absolute -bottom-1 -right-1 w-6 h-6 bg-[#22C55E] rounded-full border-2 border-[#0F172A]" />
@@ -241,8 +249,12 @@ function ProfileTab({ toast, currentUser }) {
 
             {avatarPreview && (
               <button type="button" onClick={handleRemovePhoto} className="text-xs text-red-400 hover:text-red-300 transition-colors text-left">
-                Remove photo
+                {pendingAvatarRemoval ? "Removal pending — save changes" : "Remove photo on save"}
               </button>
+            )}
+
+            {pendingAvatarRemoval && (
+              <p className="text-xs text-amber-400">Your photo will be removed when you click Save Changes.</p>
             )}
 
             <p className="text-[#475569] text-xs">Recommended: 400×400 px or larger</p>
@@ -250,7 +262,7 @@ function ProfileTab({ toast, currentUser }) {
             {avatarFile && (
               <p className="text-xs text-amber-400 flex items-center gap-1">
                 <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>
+                  <circle cx="12" cy="12" r="10" /><line x1="12" y1="8" x2="12" y2="12" /><line x1="12" y1="16" x2="12.01" y2="16" />
                 </svg>
                 Not saved yet — click "Upload Photo" to save
               </p>
@@ -263,7 +275,7 @@ function ProfileTab({ toast, currentUser }) {
         <form onSubmit={handleSubmit} className="flex flex-col gap-5">
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
             <InputField label="Display Name" name="name" value={form.name} onChange={handleChange} placeholder="Your full name"
-              icon={<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#94A3B8" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>} />
+              icon={<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#94A3B8" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" /><circle cx="12" cy="7" r="4" /></svg>} />
             <InputField label="Username" name="username" value={form.username} onChange={handleChange} placeholder="johndoe" hint="Lowercase letters, numbers and underscores only"
               icon={<span className="text-[#94A3B8] text-sm font-bold">@</span>} />
           </div>
@@ -280,7 +292,7 @@ function ProfileTab({ toast, currentUser }) {
 function AccountTab({ toast, currentUser }) {
   const { handleUpdateProfile } = useAuth();
   const [loading, setLoading] = useState(false);
-  const [form, setForm]       = useState({ email: currentUser?.email || "" });
+  const [form, setForm] = useState({ email: currentUser?.email || "" });
   const handleChange = (e) => setForm((p) => ({ ...p, [e.target.name]: e.target.value }));
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -299,7 +311,7 @@ function AccountTab({ toast, currentUser }) {
       <SectionCard title="Account Details" description="Manage your login email.">
         <form onSubmit={handleSubmit} className="flex flex-col gap-5">
           <InputField label="Email Address" name="email" type="email" value={form.email} onChange={handleChange} hint="Changing your email will require re-verification."
-            icon={<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#94A3B8" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>} />
+            icon={<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#94A3B8" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" /><polyline points="22,6 12,13 2,6" /></svg>} />
           <div className="flex justify-end pt-2"><SaveButton loading={loading} label="Update Email" /></div>
         </form>
       </SectionCard>
@@ -326,20 +338,20 @@ function AccountTab({ toast, currentUser }) {
 // ── Tab: Security ─────────────────────────────────────────────────────────────
 function SecurityTab({ toast }) {
   const [loading, setLoading] = useState(false);
-  const [show, setShow]       = useState({ current: false, newP: false, confirm: false });
-  const [form, setForm]       = useState({ current: "", newP: "", confirm: "" });
-  const [twoFA, setTwoFA]     = useState(false);
+  const [show, setShow] = useState({ current: false, newP: false, confirm: false });
+  const [form, setForm] = useState({ current: "", newP: "", confirm: "" });
+  const [twoFA, setTwoFA] = useState(false);
   const handleChange = (e) => setForm((p) => ({ ...p, [e.target.name]: e.target.value }));
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (!form.current)              return toast("Enter your current password.", "error");
-    if (form.newP.length < 8)      return toast("New password must be at least 8 characters.", "error");
+    if (!form.current) return toast("Enter your current password.", "error");
+    if (form.newP.length < 8) return toast("New password must be at least 8 characters.", "error");
     if (form.newP !== form.confirm) return toast("Passwords do not match.", "error");
     setLoading(true);
     setTimeout(() => { setLoading(false); setForm({ current: "", newP: "", confirm: "" }); toast("Password changed successfully!"); }, 1500);
   };
   const sessions = [
-    { device: "MacBook Pro",   location: "San Francisco, CA", time: "Active now",  current: true,  icon: "💻" },
+    { device: "MacBook Pro", location: "San Francisco, CA", time: "Active now", current: true, icon: "💻" },
     { device: "iPhone 14 Pro", location: "San Francisco, CA", time: "2 hours ago", current: false, icon: "📱" },
   ];
   return (
@@ -351,12 +363,12 @@ function SecurityTab({ toast }) {
               <label className="text-[#94A3B8] text-xs font-semibold uppercase tracking-wider">{f.label}</label>
               <div className="relative">
                 <div className="absolute inset-y-0 left-3.5 flex items-center pointer-events-none">
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#94A3B8" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#94A3B8" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2" /><path d="M7 11V7a5 5 0 0 1 10 0v4" /></svg>
                 </div>
                 <input type={show[f.key] ? "text" : "password"} name={f.key} value={form[f.key]} onChange={handleChange} placeholder={`Enter ${f.label.toLowerCase()}`}
                   className="w-full bg-[#0d1b2e]/80 border border-[#60A5FA]/15 focus:border-[#3B82F6]/60 focus:ring-2 focus:ring-[#3B82F6]/20 rounded-xl pl-10 pr-11 py-3 text-sm text-[#F8FAFC] placeholder-[#475569] outline-none transition-all duration-200" />
                 <button type="button" onClick={() => setShow((p) => ({ ...p, [f.key]: !p[f.key] }))} className="absolute inset-y-0 right-3.5 flex items-center text-[#94A3B8] hover:text-[#F8FAFC] transition-colors">
-                  {show[f.key] ? <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94"/><path d="M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19"/><line x1="1" y1="1" x2="23" y2="23"/></svg> : <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>}
+                  {show[f.key] ? <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94" /><path d="M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19" /><line x1="1" y1="1" x2="23" y2="23" /></svg> : <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" /><circle cx="12" cy="12" r="3" /></svg>}
                 </button>
               </div>
             </div>
@@ -405,8 +417,8 @@ function NotificationsTab({ toast }) {
   const toggle = (key) => setSettings((p) => ({ ...p, [key]: !p[key] }));
   const items = [
     { key: "directMessages", label: "Direct Messages", desc: "Notify for private messages" },
-    { key: "mentions",       label: "Mentions",        desc: "Notify when @mentioned" },
-    { key: "groupMessages",  label: "Group Messages",  desc: "Notify for all group activity" },
+    { key: "mentions", label: "Mentions", desc: "Notify when @mentioned" },
+    { key: "groupMessages", label: "Group Messages", desc: "Notify for all group activity" },
   ];
   return (
     <SectionCard title="In-App Notifications" description="Choose what to be notified about.">
@@ -427,8 +439,8 @@ function PrivacyTab({ toast }) {
   const [settings, setSettings] = useState({ showOnline: true, readReceipts: true });
   const toggle = (key) => setSettings((p) => ({ ...p, [key]: !p[key] }));
   const items = [
-    { key: "showOnline",   label: "Online Status",  desc: "Let others see when you're online" },
-    { key: "readReceipts", label: "Read Receipts",  desc: "Let senders know you read their message" },
+    { key: "showOnline", label: "Online Status", desc: "Let others see when you're online" },
+    { key: "readReceipts", label: "Read Receipts", desc: "Let senders know you read their message" },
   ];
   return (
     <SectionCard title="Privacy Controls" description="Manage who can see your activity.">
@@ -465,10 +477,10 @@ function AppearanceTab({ toast }) {
 // ── Tab: Danger Zone ──────────────────────────────────────────────────────────
 function DangerTab() {
   const [confirmText, setConfirmText] = useState("");
-  const [showModal,   setShowModal]   = useState(false);
+  const [showModal, setShowModal] = useState(false);
   return (
     <div className="flex flex-col gap-6">
-      <div className="bg-gradient-to-br from-red-500/5 to-transparent border border-red-500/20 rounded-2xl p-6 md:p-8">
+      <div className="bg-linear-to-br from-red-500/5 to-transparent border border-red-500/20 rounded-2xl p-6 md:p-8">
         <h2 className="text-red-400 font-bold text-lg mb-1">Delete Account</h2>
         <p className="text-[#94A3B8] text-sm mb-5">Permanently delete your account. <span className="text-red-400 font-semibold">This action is irreversible.</span></p>
         <button onClick={() => setShowModal(true)} className="text-sm font-semibold text-red-400 border border-red-500/30 hover:bg-red-500/10 px-5 py-2.5 rounded-xl transition-all duration-200">Delete my account</button>
@@ -497,7 +509,7 @@ export default function ProfilePage() {
   const { user, handleLogout } = useAuth();
   const navigate = useNavigate();
 
-  const [activeTab,     setActiveTab]     = useState("profile");
+  const [activeTab, setActiveTab] = useState("profile");
   const [mobileNavOpen, setMobileNavOpen] = useState(false);
   const [toast, setToast] = useState(null);
 
@@ -516,38 +528,38 @@ export default function ProfilePage() {
     : "U";
 
   const TABS = {
-    profile:    <ProfileTab    toast={showToast} currentUser={user} />,
-    account:    <AccountTab    toast={showToast} currentUser={user} />,
-    security:   <SecurityTab   toast={showToast} />,
-    notifs:     <NotificationsTab toast={showToast} />,
-    privacy:    <PrivacyTab    toast={showToast} />,
+    profile: <ProfileTab toast={showToast} currentUser={user} />,
+    account: <AccountTab toast={showToast} currentUser={user} />,
+    security: <SecurityTab toast={showToast} />,
+    notifs: <NotificationsTab toast={showToast} />,
+    privacy: <PrivacyTab toast={showToast} />,
     appearance: <AppearanceTab toast={showToast} />,
-    danger:     <DangerTab />,
+    danger: <DangerTab />,
   };
 
   const TAB_DESCRIPTIONS = {
-    profile:    "Manage how others see you on ChatSphere.",
-    account:    "Update your email and connected accounts.",
-    security:   "Keep your account safe with a strong password and 2FA.",
-    notifs:     "Choose what to be notified about.",
-    privacy:    "Control who can see your activity.",
+    profile: "Manage how others see you on ChatSphere.",
+    account: "Update your email and connected accounts.",
+    security: "Keep your account safe with a strong password and 2FA.",
+    notifs: "Choose what to be notified about.",
+    privacy: "Control who can see your activity.",
     appearance: "Personalise your experience.",
-    danger:     "Irreversible actions related to your account.",
+    danger: "Irreversible actions related to your account.",
   };
 
   const activeItem = NAV_ITEMS.find((n) => n.id === activeTab);
 
   return (
     <div className="min-h-screen bg-[#0F172A] relative overflow-hidden">
-      <div className="pointer-events-none fixed -top-40 -left-40 w-[500px] h-[500px] rounded-full bg-[#2563EB]/15 blur-[120px]" />
-      <div className="pointer-events-none fixed bottom-0 right-0 w-[400px] h-[400px] rounded-full bg-[#3B82F6]/10 blur-[100px]" />
+      <div className="pointer-events-none fixed -top-40 -left-40 w-125 h-125 rounded-full bg-[#2563EB]/15 blur-[120px]" />
+      <div className="pointer-events-none fixed bottom-0 right-0 w-100 h-100 rounded-full bg-[#3B82F6]/10 blur-[100px]" />
 
       {/* Navbar */}
       <nav className="sticky top-0 z-40 bg-[#0F172A]/85 backdrop-blur-xl border-b border-[#60A5FA]/10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between gap-4">
           <Link to="/dashboard" className="flex items-center gap-2.5 shrink-0">
-            <div className="w-8 h-8 rounded-xl bg-gradient-to-br from-[#2563EB] to-[#60A5FA] flex items-center justify-center shadow-lg shadow-blue-500/30">
-              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+            <div className="w-8 h-8 rounded-xl bg-linear-to-br from-[#2563EB] to-[#60A5FA] flex items-center justify-center shadow-lg shadow-blue-500/30">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" /></svg>
             </div>
             <span className="text-[#F8FAFC] font-bold text-lg tracking-tight">Chat<span className="text-[#60A5FA]">Sphere</span></span>
           </Link>
@@ -561,8 +573,8 @@ export default function ProfilePage() {
           <div className="flex items-center gap-3">
             <div className="hidden sm:flex items-center gap-2.5 bg-[#1E293B]/60 border border-[#60A5FA]/15 rounded-xl px-3 py-2">
               {/* BONUS FIX: Show actual picture in the top right navbar! */}
-              <div className="w-7 h-7 rounded-full bg-gradient-to-br from-[#2563EB] to-[#60A5FA] flex items-center justify-center text-[11px] font-bold text-white overflow-hidden">
-                {user?.profilePicture 
+              <div className="w-7 h-7 rounded-full bg-linear-to-br from-[#2563EB] to-[#60A5FA] flex items-center justify-center text-[11px] font-bold text-white overflow-hidden">
+                {user?.profilePicture
                   ? <img src={user.profilePicture} alt="User" className="w-full h-full object-cover" />
                   : userInitials
                 }
@@ -593,7 +605,7 @@ export default function ProfilePage() {
           <div className="lg:hidden w-full mb-4 flex flex-col gap-2">
             <button onClick={() => setMobileNavOpen((v) => !v)} className="flex items-center justify-between w-full bg-[#1E293B]/80 border border-[#60A5FA]/15 rounded-xl px-4 py-3">
               <div className="flex items-center gap-3 text-sm font-medium text-[#F8FAFC]">{activeItem?.icon}{activeItem?.label}</div>
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#94A3B8" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={`transition-transform duration-200 ${mobileNavOpen ? "rotate-180" : ""}`}><polyline points="6 9 12 15 18 9"/></svg>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#94A3B8" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={`transition-transform duration-200 ${mobileNavOpen ? "rotate-180" : ""}`}><polyline points="6 9 12 15 18 9" /></svg>
             </button>
             {mobileNavOpen && (
               <div className="bg-[#1E293B]/90 border border-[#60A5FA]/15 rounded-xl overflow-hidden">

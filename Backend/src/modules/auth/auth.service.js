@@ -116,11 +116,25 @@ const updateProfile = async (userId, { name, email, username }) => {
     return user;
 };
 
+const deleteProfilePicture = async (userId) => {
+    const user = await userModel.findByIdAndUpdate(
+        userId,
+        { $set: { profilePicture: null } },
+        { new: true }
+    ).select("-password");
+
+    if (!user) {
+        throw new ApiError(404, "User not found");
+    }
+
+    return user;
+};
 
 module.exports = {
     register,
     login,
     getProfile,
     updateProfilePicture,
-    updateProfile
+    updateProfile,
+    deleteProfilePicture
 };
