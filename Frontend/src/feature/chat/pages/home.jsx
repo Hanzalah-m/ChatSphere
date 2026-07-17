@@ -1,22 +1,14 @@
 import { useState, useRef, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../../auth/hooks/useAuth";
+import { searchUsersApi } from "../../chat/user,api"; 
 
-// ── Mock Data ─────────────────────────────────────────────────────────────────
-const CONTACTS = [
-  { id: 1, name: "Sarah Johnson", initials: "SJ", gradient: "from-violet-500 to-pink-500", status: "online", lastMsg: "Are we still meeting at 5 PM?", time: "2:47 PM", unread: 2, messages: [{ id: 1, from: "them", text: "Hey! How's the project going? 👋", time: "2:30 PM" }, { id: 2, from: "me", text: "Going really well! Almost done with the frontend.", time: "2:32 PM" }, { id: 3, from: "them", text: "That's awesome! Can't wait to see it.", time: "2:35 PM" }, { id: 4, from: "me", text: "I'll share a preview soon 🚀", time: "2:40 PM" }, { id: 5, from: "them", text: "Are we still meeting at 5 PM?", time: "2:47 PM" }] },
-  { id: 2, name: "John Doe", initials: "JD", gradient: "from-emerald-500 to-teal-500", status: "online", lastMsg: "I'll be there in 10 minutes!", time: "2:51 PM", unread: 0, messages: [{ id: 1, from: "them", text: "Did you check the latest designs?", time: "1:10 PM" }, { id: 2, from: "me", text: "Yes! They look clean. A few tweaks needed.", time: "1:15 PM" }, { id: 3, from: "them", text: "Agree. I'll update them by EOD.", time: "1:18 PM" }, { id: 4, from: "me", text: "Perfect. See you at standup!", time: "1:20 PM" }, { id: 5, from: "them", text: "I'll be there in 10 minutes!", time: "2:51 PM" }] },
-  { id: 3, name: "Alex Kim", initials: "AK", gradient: "from-amber-500 to-orange-500", status: "away", lastMsg: "Can you review my PR?", time: "1:20 PM", unread: 1, messages: [{ id: 1, from: "them", text: "Hey, just pushed the new feature branch.", time: "12:45 PM" }, { id: 2, from: "me", text: "Nice! I'll take a look.", time: "12:50 PM" }, { id: 3, from: "them", text: "Can you review my PR?", time: "1:20 PM" }] },
-  { id: 4, name: "Maria Garcia", initials: "MG", gradient: "from-rose-500 to-red-500", status: "online", lastMsg: "The client loved the demo 🎉", time: "12:05 PM", unread: 0, messages: [{ id: 1, from: "them", text: "Demo went really well!", time: "11:50 AM" }, { id: 2, from: "me", text: "That's amazing! What did they say?", time: "11:55 AM" }, { id: 3, from: "them", text: "The client loved the demo 🎉", time: "12:05 PM" }] },
-  { id: 5, name: "David Chen", initials: "DC", gradient: "from-blue-500 to-indigo-500", status: "offline", lastMsg: "Talk tomorrow 👍", time: "Yesterday", unread: 0, messages: [{ id: 1, from: "me", text: "Are you free for a quick call?", time: "Yesterday" }, { id: 2, from: "them", text: "Not right now, swamped with tickets.", time: "Yesterday" }, { id: 3, from: "me", text: "No worries, tomorrow works!", time: "Yesterday" }, { id: 4, from: "them", text: "Talk tomorrow 👍", time: "Yesterday" }] },
-  { id: 6, name: "Priya Patel", initials: "PP", gradient: "from-purple-500 to-violet-500", status: "offline", lastMsg: "Sent you the report.", time: "Mon", unread: 0, messages: [{ id: 1, from: "them", text: "Just finished the Q3 report.", time: "Mon" }, { id: 2, from: "me", text: "Great, can you send it over?", time: "Mon" }, { id: 3, from: "them", text: "Sent you the report.", time: "Mon" }] },
-];
+// 🗑️ DELETED THE ENTIRE "const CONTACTS = [...]" MOCK DATA ARRAY
 
 const STATUS_COLOR = { online: "bg-[#22C55E]", away: "bg-amber-400", offline: "bg-slate-500" };
 const STATUS_LABEL = { online: "Online", away: "Away", offline: "Offline" };
 
 // ── Small Components ──────────────────────────────────────────────────────────
-// UPDATED: Added profilePic prop and overflow-hidden for image
 function Avatar({ initials, gradient, size = "md", status, profilePic }) {
   const sizes = { sm: "w-8 h-8 text-[10px]", md: "w-10 h-10 text-xs", lg: "w-12 h-12 text-sm" };
   const dotSizes = { sm: "w-2.5 h-2.5 border-[1.5px]", md: "w-3 h-3 border-2", lg: "w-3.5 h-3.5 border-2" };
@@ -69,7 +61,6 @@ function SettingsPanel({ onClose, onLogout, currentUser }) {
       </div>
 
       <div className="flex-1 overflow-y-auto px-4 py-5 flex flex-col gap-4">
-        {/* UPDATED: Passed profilePicture prop */}
         <div className="rounded-2xl border border-[#60A5FA]/10 bg-[#1E293B]/60 p-4 flex items-center gap-3">
           <Avatar initials={userInitials} gradient="from-[#2563EB] to-[#60A5FA]" size="md" status="online" profilePic={currentUser?.profilePicture} />
           <div className="min-w-0">
@@ -127,7 +118,7 @@ function Sidebar({ contacts, activeId, onSelect, search, setSearch, collapsed, s
             <div className="absolute inset-y-0 left-3 flex items-center pointer-events-none">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#94A3B8" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
             </div>
-            <input type="text" value={search} onChange={(e) => setSearch(e.target.value)} placeholder="Search conversations…" className="w-full bg-[#1E293B]/60 border border-[#60A5FA]/10 focus:border-[#3B82F6]/40 focus:ring-1 focus:ring-[#3B82F6]/20 rounded-xl pl-9 pr-4 py-2.5 text-sm text-[#F8FAFC] placeholder-[#475569] outline-none transition-all duration-200" />
+            <input type="text" value={search} onChange={(e) => setSearch(e.target.value)} placeholder="Search by username or name…" className="w-full bg-[#1E293B]/60 border border-[#60A5FA]/10 focus:border-[#3B82F6]/40 focus:ring-1 focus:ring-[#3B82F6]/20 rounded-xl pl-9 pr-4 py-2.5 text-sm text-[#F8FAFC] placeholder-[#475569] outline-none transition-all duration-200" />
           </div>
         </div>
       )}
@@ -136,7 +127,7 @@ function Sidebar({ contacts, activeId, onSelect, search, setSearch, collapsed, s
         {!collapsed && (<p className="px-4 py-2 text-[10px] font-bold uppercase tracking-widest text-[#475569]">Messages {filtered.length > 0 && `· ${filtered.length}`}</p>)}
         {filtered.map((c) => (
           <button key={c.id} onClick={() => onSelect(c)} className={`w-full flex items-center gap-3 px-3 py-2.5 mx-1 rounded-xl transition-all duration-150 group ${activeId === c.id ? "bg-[#2563EB]/15 border border-[#2563EB]/20" : "hover:bg-white/5 border border-transparent"}`} style={{ width: "calc(100% - 8px)" }}>
-            <Avatar initials={c.initials} gradient={c.gradient} size="md" status={c.status} />
+            <Avatar initials={c.initials} gradient={c.gradient} size="md" status={c.status} profilePic={c.profilePic} />
             {!collapsed && (
               <div className="flex-1 min-w-0 text-left">
                 <div className="flex items-center justify-between mb-0.5">
@@ -156,20 +147,17 @@ function Sidebar({ contacts, activeId, onSelect, search, setSearch, collapsed, s
       <div className={`relative border-t border-[#60A5FA]/10 p-3 shrink-0 ${collapsed ? "flex justify-center" : ""}`}>
         {collapsed ? (
           <Link to="/profile" title="Go to Profile">
-            {/* UPDATED: Passed profilePicture prop (Collapsed) */}
             <Avatar initials={userInitials} gradient="from-[#2563EB] to-[#60A5FA]" size="md" status="online" profilePic={currentUser?.profilePicture} />
           </Link>
         ) : (
           <div className="flex items-center gap-3">
             <Link to="/profile" title="Go to Profile" className="flex items-center gap-3 flex-1 min-w-0 group">
-              {/* UPDATED: Passed profilePicture prop (Expanded) */}
               <Avatar initials={userInitials} gradient="from-[#2563EB] to-[#60A5FA]" size="md" status="online" profilePic={currentUser?.profilePicture} />
               <div className="flex-1 min-w-0">
                 <p className="text-sm font-semibold text-[#F8FAFC] truncate group-hover:text-[#60A5FA] transition-colors">{currentUser?.name || "Loading..."}</p>
                 <p className="text-xs text-[#22C55E]">● Online</p>
               </div>
             </Link>
-
             <button onClick={onOpenSettings} className="w-7 h-7 rounded-lg hover:bg-white/5 flex items-center justify-center text-[#94A3B8] hover:text-[#F8FAFC] transition-all" title="Settings">
               <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
             </button>
@@ -185,7 +173,7 @@ function MessageBubble({ msg, showAvatar, contact }) {
   const isMe = msg.from === "me";
   return (
     <div className={`flex items-end gap-2.5 px-4 py-0.5 group ${isMe ? "flex-row-reverse" : ""}`}>
-      <div className="w-8 shrink-0">{!isMe && showAvatar && <Avatar initials={contact.initials} gradient={contact.gradient} size="sm" />}</div>
+      <div className="w-8 shrink-0">{!isMe && showAvatar && <Avatar initials={contact.initials} gradient={contact.gradient} size="sm" profilePic={contact.profilePic} />}</div>
       <div className={`flex flex-col max-w-[65%] ${isMe ? "items-end" : "items-start"}`}>
         <div className={`px-4 py-2.5 rounded-2xl text-sm leading-relaxed wrap-break-words ${isMe ? "bg-linear-to-br from-[#2563EB] to-[#3B82F6] text-white rounded-br-sm" : "bg-[#1E293B] border border-[#60A5FA]/10 text-[#F8FAFC] rounded-bl-sm"}`}>{msg.text}</div>
         <div className={`flex items-center gap-1.5 mt-1 opacity-0 group-hover:opacity-100 transition-opacity duration-200 ${isMe ? "flex-row-reverse" : ""}`}>
@@ -246,7 +234,7 @@ function ChatArea({ contact, messages, onSend, showInfo, setShowInfo, mobileBack
       <div className="flex items-center justify-between px-4 h-16 border-b border-[#60A5FA]/10 bg-[#0a1628]/60 backdrop-blur-sm shrink-0">
         <div className="flex items-center gap-3">
           <button onClick={mobileBack} className="md:hidden w-8 h-8 rounded-lg hover:bg-white/5 flex items-center justify-center text-[#94A3B8] mr-1"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="15 18 9 12 15 6"/></svg></button>
-          <Avatar initials={contact.initials} gradient={contact.gradient} size="md" status={contact.status} />
+          <Avatar initials={contact.initials} gradient={contact.gradient} size="md" status={contact.status} profilePic={contact.profilePic} />
           <div>
             <p className="text-sm font-bold text-[#F8FAFC]">{contact.name}</p>
             <p className={`text-xs font-medium ${contact.status === "online" ? "text-[#22C55E]" : contact.status === "away" ? "text-amber-400" : "text-[#475569]"}`}>{isTyping && contact.status === "online" ? "typing…" : `● ${STATUS_LABEL[contact.status]}`}</p>
@@ -292,7 +280,7 @@ function InfoPanel({ contact, onClose }) {
       <div className="flex-1 overflow-y-auto scrollbar-hide py-6 px-5 flex flex-col gap-6">
         <div className="flex flex-col items-center gap-3 text-center">
           <div className={`w-20 h-20 rounded-2xl bg-linear-to-br ${contact.gradient} flex items-center justify-center text-2xl font-bold text-white shadow-xl overflow-hidden`}>
-            {contact.initials}
+            {contact.profilePic ? <img src={contact.profilePic} alt="avatar" className="w-full h-full object-cover" /> : contact.initials}
           </div>
           <div><h3 className="text-[#F8FAFC] font-bold text-lg">{contact.name}</h3><p className={`text-sm font-medium mt-0.5 ${contact.status === "online" ? "text-[#22C55E]" : contact.status === "away" ? "text-amber-400" : "text-[#475569]"}`}>● {STATUS_LABEL[contact.status]}</p></div>
           <div className="flex gap-2 mt-1">
@@ -301,7 +289,8 @@ function InfoPanel({ contact, onClose }) {
           </div>
         </div>
         <div className="bg-[#1E293B]/50 border border-[#60A5FA]/08 rounded-xl p-4 flex flex-col gap-3">
-          {[{ label: "Username", value: `@${contact.name.split(" ")[0].toLowerCase()}` }, { label: "Member since", value: "Jan 2024" }, { label: "Messages", value: `${contact.messages.length} in this chat` }].map((row) => (<div key={row.label}><p className="text-[10px] font-bold uppercase tracking-widest text-[#475569] mb-0.5">{row.label}</p><p className="text-sm text-[#CBD5E1]">{row.value}</p></div>))}
+          <div><p className="text-[10px] font-bold uppercase tracking-widest text-[#475569] mb-0.5">Username</p><p className="text-sm text-[#CBD5E1]">@{contact.username || contact.name.split(" ")[0].toLowerCase()}</p></div>
+          <div><p className="text-[10px] font-bold uppercase tracking-widest text-[#475569] mb-0.5">Messages</p><p className="text-sm text-[#CBD5E1]">{contact.messages.length} in this chat</p></div>
         </div>
         <div><p className="text-xs font-bold uppercase tracking-widest text-[#475569] mb-3">Shared Media</p><div className="grid grid-cols-3 gap-1.5">{[...Array(6)].map((_, i) => (<div key={i} className="aspect-square rounded-xl bg-[#1E293B] border border-[#60A5FA]/08 flex items-center justify-center text-[#475569]"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg></div>))}</div></div>
         <div className="flex flex-col gap-2">
@@ -319,7 +308,11 @@ export default function ChatPage() {
   const { user, handleLogout } = useAuth();
   const navigate = useNavigate();
   
-  const [contacts, setContacts] = useState(CONTACTS);
+  // CHANGED: Empty arrays for real data
+  const [contacts, setContacts] = useState([]); 
+  const [searchResults, setSearchResults] = useState([]);
+  const [isSearching, setIsSearching] = useState(false);
+  
   const [activeContact, setActiveContact] = useState(null);
   const [search, setSearch] = useState("");
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
@@ -327,15 +320,64 @@ export default function ChatPage() {
   const [showMobileChat, setShowMobileChat] = useState(false);
   const [showSettingsView, setShowSettingsView] = useState(false);
 
+  // ADDED: Fetch real users when typing
+  useEffect(() => {
+    const fetchUsers = async () => {
+      if (search.trim().length === 0) {
+        setSearchResults([]);
+        setIsSearching(false);
+        return;
+      }
+
+      setIsSearching(true);
+      try {
+        const realUsers = await searchUsersApi(search);
+        
+        // Map database users to match UI components
+        const formattedUsers = realUsers.map((u) => ({
+          id: u._id,
+          name: u.name,
+          username: u.username, 
+          initials: u.name ? u.name.split(" ").map(n => n[0]).join("").slice(0, 2).toUpperCase() : "U",
+          profilePic: u.profilePicture || null,
+          gradient: "from-[#2563EB] to-[#60A5FA]", 
+          status: "offline", 
+          lastMsg: "Start a conversation...", 
+          time: "Now",
+          unread: 0,
+          messages: [] 
+        }));
+
+        setSearchResults(formattedUsers);
+      } catch (error) {
+        console.error("Search failed:", error);
+      } finally {
+        setIsSearching(false);
+      }
+    };
+
+    const timer = setTimeout(fetchUsers, 300);
+    return () => clearTimeout(timer);
+  }, [search]);
+
   const activeMessages = activeContact ? contacts.find((c) => c.id === activeContact.id)?.messages || [] : [];
 
   const handleSelectContact = (contact) => {
+    // Add to main list if not already there
+    setContacts((prev) => {
+      const exists = prev.find(c => c.id === contact.id);
+      if (!exists) return [contact, ...prev]; 
+      return prev;
+    });
+
     setContacts((prev) => prev.map((c) => (c.id === contact.id ? { ...c, unread: 0 } : c)));
     setActiveContact(contact);
     setShowSettingsView(false);
     setShowMobileChat(true);
+    setSearch(""); // Clear search after clicking
   };
 
+  // TEMPORARY: Keep your dummy send function for now, Socket.io will replace this
   const handleSend = (text) => {
     const newMsg = { id: Date.now(), from: "me", text, time: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }) };
     setContacts((prev) => prev.map((c) => (c.id === activeContact.id ? { ...c, messages: [...c.messages, newMsg], lastMsg: text, time: "Now" } : c)));
@@ -353,6 +395,9 @@ export default function ChatPage() {
     setShowInfo(false);
   };
 
+  // CHANGED: Decide which list to show
+  const displayList = search.trim().length > 0 ? searchResults : contacts;
+
   return (
     <div className="h-screen bg-[#0F172A] flex flex-col overflow-hidden">
       <div className="pointer-events-none fixed -top-40 -left-40 w-125 h-125 rounded-full bg-[#2563EB]/10 blur-[120px]" />
@@ -361,7 +406,7 @@ export default function ChatPage() {
       <div className="flex flex-1 min-h-0 relative">
         <div className={`${showMobileChat ? "hidden md:flex" : "flex"} flex-col h-full`} style={{ flexShrink: 0 }}>
           <Sidebar
-            contacts={contacts}
+            contacts={displayList} // CHANGED
             activeId={activeContact?.id}
             onSelect={handleSelectContact}
             search={search}
