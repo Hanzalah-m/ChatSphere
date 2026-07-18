@@ -1,7 +1,8 @@
 import { useState, useRef, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../../auth/hooks/useAuth";
-import { searchUsersApi } from "../../chat/user,api"; 
+import { searchUsersApi } from "../../users/user.api";
+import { accessChatApi, fetchMessagesApi, sendMessageApi, fetchChatsApi, markAsReadApi } from "../chat.api";
 
 // 🗑️ DELETED THE ENTIRE "const CONTACTS = [...]" MOCK DATA ARRAY
 
@@ -136,7 +137,7 @@ function Sidebar({ contacts, activeId, onSelect, search, setSearch, collapsed, s
                 </div>
                 <div className="flex items-center justify-between">
                   <p className="text-xs text-[#475569] truncate">{c.lastMsg}</p>
-                  {c.unread > 0 && (<span className="ml-2 shrink-0 w-5 h-5 bg-[#2563EB] rounded-full text-[10px] font-bold text-white flex items-center justify-center">{c.unread}</span>)}
+                  {c.unread > 0 && (<span className="ml-2 shrink-0 w-5 h-5 bg-[#22C55E] rounded-full text-[10px] font-bold text-white flex items-center justify-center">{c.unread}</span>)}
                 </div>
               </div>
             )}
@@ -307,12 +308,13 @@ function InfoPanel({ contact, onClose }) {
 export default function ChatPage() {
   const { user, handleLogout } = useAuth();
   const navigate = useNavigate();
-  
-  // CHANGED: Empty arrays for real data
-  const [contacts, setContacts] = useState([]); 
+
+  const [contacts, setContacts] = useState([]);
   const [searchResults, setSearchResults] = useState([]);
   const [isSearching, setIsSearching] = useState(false);
-  
+  const [chatLoading, setChatLoading] = useState(false);
+  const [contactsLoading, setContactsLoading] = useState(true);
+
   const [activeContact, setActiveContact] = useState(null);
   const [search, setSearch] = useState("");
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
@@ -320,7 +322,52 @@ export default function ChatPage() {
   const [showMobileChat, setShowMobileChat] = useState(false);
   const [showSettingsView, setShowSettingsView] = useState(false);
 
-  // ADDED: Fetch real users when typing
+  // ── ADDED: Load all existing chats for the logged-in user on mount ─────────
+  useEffect(() => {
+    const loadChats = async () => {
+      if (!user?.id) return;
+
+      setContactsLoading(true);
+      try {
+        const chats = await fetchChatsApi();
+
+        // Backend /api/chats returns chat objects with members and latestMessage.text.
+        const formatted = (chats || []).map((chat) => {
+          const otherUser = chat.members?.find((u) => u._id?.toString() !== user.id?.toString()) || {};
+          const latestMessage = chat.latestMessage;
+
+          return {
+            id: otherUser._id,
+            chatId: chat._id,
+            name: otherUser.name || "Unknown",
+            username: otherUser.username,
+            initials: otherUser.name
+              ? otherUser.name.split(" ").map((n) => n[0]).join("").slice(0, 2).toUpperCase()
+              : "U",
+            profilePic: otherUser.profilePicture || null,
+            gradient: "from-[#2563EB] to-[#60A5FA]",
+            status: "offline",
+            lastMsg: latestMessage?.text || "Start a conversation...",
+            time: latestMessage?.createdAt
+              ? new Date(latestMessage.createdAt).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })
+              : "",
+            unread: chat.unreadCount || 0,
+            messages: [], // fetched lazily when the chat is opened
+          };
+        });
+
+        setContacts(formatted);
+      } catch (error) {
+        console.error("Failed to load chats:", error);
+      } finally {
+        setContactsLoading(false);
+      }
+    };
+
+    loadChats();
+  }, [user?.id]);
+
+  // Fetch real users when typing in search
   useEffect(() => {
     const fetchUsers = async () => {
       if (search.trim().length === 0) {
@@ -332,20 +379,19 @@ export default function ChatPage() {
       setIsSearching(true);
       try {
         const realUsers = await searchUsersApi(search);
-        
-        // Map database users to match UI components
+
         const formattedUsers = realUsers.map((u) => ({
           id: u._id,
           name: u.name,
-          username: u.username, 
+          username: u.username,
           initials: u.name ? u.name.split(" ").map(n => n[0]).join("").slice(0, 2).toUpperCase() : "U",
           profilePic: u.profilePicture || null,
-          gradient: "from-[#2563EB] to-[#60A5FA]", 
-          status: "offline", 
-          lastMsg: "Start a conversation...", 
+          gradient: "from-[#2563EB] to-[#60A5FA]",
+          status: "offline",
+          lastMsg: "Start a conversation...",
           time: "Now",
           unread: 0,
-          messages: [] 
+          messages: []
         }));
 
         setSearchResults(formattedUsers);
@@ -362,26 +408,71 @@ export default function ChatPage() {
 
   const activeMessages = activeContact ? contacts.find((c) => c.id === activeContact.id)?.messages || [] : [];
 
-  const handleSelectContact = (contact) => {
-    // Add to main list if not already there
-    setContacts((prev) => {
-      const exists = prev.find(c => c.id === contact.id);
-      if (!exists) return [contact, ...prev]; 
-      return prev;
-    });
+  const handleSelectContact = async (contact) => {
+    if (!contact?.id) return;
 
-    setContacts((prev) => prev.map((c) => (c.id === contact.id ? { ...c, unread: 0 } : c)));
-    setActiveContact(contact);
-    setShowSettingsView(false);
-    setShowMobileChat(true);
-    setSearch(""); // Clear search after clicking
+    setChatLoading(true);
+    try {
+      const chat = await accessChatApi(contact.id);
+      const messages = await fetchMessagesApi(chat?._id);
+      await markAsReadApi(chat?._id);
+
+      const formattedMessages = (messages || []).map((msg) => ({
+        id: msg._id,
+        from: msg.sender?._id === user?.id ? "me" : "other",
+        text: msg.content,
+        time: new Date(msg.createdAt).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })
+      }));
+
+      const selectedContact = {
+        ...contact,
+        chatId: chat?._id,
+        messages: formattedMessages,
+        lastMsg: formattedMessages[formattedMessages.length - 1]?.text || "Start a conversation...",
+        time: formattedMessages[formattedMessages.length - 1] ? "Now" : "Now",
+        unread: 0
+      };
+
+      setContacts((prev) => {
+        const exists = prev.find((c) => c.id === contact.id);
+        if (!exists) return [selectedContact, ...prev];
+        return prev.map((c) => (c.id === contact.id ? { ...selectedContact, unread: 0 } : c));
+      });
+
+      setActiveContact(selectedContact);
+      setShowSettingsView(false);
+      setShowMobileChat(true);
+      setSearch("");
+    } catch (error) {
+      console.error("Failed to open chat:", error);
+    } finally {
+      setChatLoading(false);
+    }
   };
 
-  // TEMPORARY: Keep your dummy send function for now, Socket.io will replace this
-  const handleSend = (text) => {
-    const newMsg = { id: Date.now(), from: "me", text, time: new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" }) };
-    setContacts((prev) => prev.map((c) => (c.id === activeContact.id ? { ...c, messages: [...c.messages, newMsg], lastMsg: text, time: "Now" } : c)));
-    setActiveContact((prev) => prev ? { ...prev } : prev);
+  const handleSend = async (text) => {
+    if (!activeContact?.chatId) return;
+
+    try {
+      const savedMessage = await sendMessageApi(activeContact.chatId, text);
+      const newMsg = {
+        id: savedMessage._id || Date.now(),
+        from: "me",
+        text: savedMessage.content || text,
+        time: new Date(savedMessage.createdAt || Date.now()).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })
+      };
+
+      setContacts((prev) => prev.map((c) => (c.id === activeContact.id ? {
+        ...c,
+        messages: [...c.messages, newMsg],
+        lastMsg: text,
+        time: "Now"
+      } : c)));
+
+      setActiveContact((prev) => prev ? { ...prev, messages: [...prev.messages, newMsg], lastMsg: text, time: "Now" } : prev);
+    } catch (error) {
+      console.error("Failed to send message:", error);
+    }
   };
 
   const onLogout = async () => {
@@ -395,7 +486,6 @@ export default function ChatPage() {
     setShowInfo(false);
   };
 
-  // CHANGED: Decide which list to show
   const displayList = search.trim().length > 0 ? searchResults : contacts;
 
   return (
@@ -406,7 +496,7 @@ export default function ChatPage() {
       <div className="flex flex-1 min-h-0 relative">
         <div className={`${showMobileChat ? "hidden md:flex" : "flex"} flex-col h-full`} style={{ flexShrink: 0 }}>
           <Sidebar
-            contacts={displayList} // CHANGED
+            contacts={displayList}
             activeId={activeContact?.id}
             onSelect={handleSelectContact}
             search={search}
