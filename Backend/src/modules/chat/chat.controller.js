@@ -1,6 +1,7 @@
 const ApiError = require("../../utils/api.error");
 const { accessChat, fetchMessages, sendMessage, fetchChats, markChatAsRead } = require("../../modules/chat/chat.service");
 const formatUser = require("../../utils/helpers");
+const { getIO } = require("../../socket/socket");
 
 const accessChatController = async (req, res, next) => {
     try {
@@ -35,7 +36,14 @@ const sendMessageController = async (req, res, next) => {
     try {
         const { chatId } = req.params;
         const { content } = req.body;
+        
+        // 1. Save message to database via your service
         const message = await sendMessage(chatId, req.user.id, content);
+
+        // 2. Emit the message to the Socket.io room
+        // (Ensure your service returns a fully populated message object)
+        const io = getIO();
+        io.to(chatId).emit("message received", message);
 
         res.json({
             success: true,
