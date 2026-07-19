@@ -1,9 +1,4 @@
-import axios from "axios";
-
-const api = axios.create({
-    baseURL: "http://localhost:3000",
-    withCredentials: true
-});
+import api from "../../APIs";
 
 // 1. Create or find a chat room with a clicked user
 export const accessChatApi = async (userId) => {

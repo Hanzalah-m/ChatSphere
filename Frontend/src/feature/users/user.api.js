@@ -1,9 +1,4 @@
-import axios from "axios";
-
-const api = axios.create({
-    baseURL: "http://localhost:3000",
-    withCredentials: true
-});
+import api from "../../APIs";
 
 export const searchUsersApi = async (query) => {
     const trimmedQuery = query?.trim();

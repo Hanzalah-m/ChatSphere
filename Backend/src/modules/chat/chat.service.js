@@ -10,7 +10,7 @@ const accessChat = async (currentUserId, targetUserId) => {
 
     // Check if a chat between these two users already exists
     let chat = await Chat.findOne({
-        members: { $all: [currentUserId, targetUserId] } // $all: [A, B] matches [A, B] regardless of order
+        members: { $all: [currentUserId, targetUserId] } 
     }).populate("members", "name username profilePicture");
 
     // If it doesn't exist, create a new one
@@ -23,10 +23,9 @@ const accessChat = async (currentUserId, targetUserId) => {
     return chat;
 };
 
-// We will add fetchMessages here later
 const fetchMessages = async (chatId) => {
     const messages = await Message.find({ chatId })
-        .sort({ createdAt: 1 }) // Oldest first for chronological order
+        .sort({ createdAt: 1 }) 
         .populate("sender", "name username profilePicture");
 
     return messages;
@@ -55,7 +54,9 @@ const sendMessage = async (chatId, senderId, content) => {
         }
     });
 
-    return message;
+    const populatedMessage = await message.populate("sender", "name username profilePicture");
+
+    return populatedMessage;
 };
 
 const fetchChats = async (userId) => {

@@ -227,7 +227,7 @@ export default function LoginPage() {
           {/* Sign up link */}
           <p className="text-center text-sm text-[#94A3B8] mt-6">
             Don't have an account?{" "}
-            <a href="/signup" className="text-[#60A5FA] font-semibold hover:text-[#3B82F6] transition-colors">
+            <a href="/register" className="text-[#60A5FA] font-semibold hover:text-[#3B82F6] transition-colors">
               Create one free
             </a>
           </p>
