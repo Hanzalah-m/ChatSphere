@@ -11,7 +11,7 @@ let io;
 const initSocket = (server) => {
   io = new Server(server, {
     cors: {
-      origin: "http://localhost:5173", // Your Vite frontend URL
+      origin: ["http://localhost:5173", "https://chatsphere-lake.vercel.app"], // Your Vite frontend URL
       credentials: true, // Allow cookies to be sent
     },
   });

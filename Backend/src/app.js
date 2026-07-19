@@ -13,7 +13,8 @@ app.use(cookieParser())
 app.use(cors({
   origin: [
     "http://localhost:5173",
-    "https://localhost:5170"
+    "https://localhost:5170",
+    "https://chatsphere-lake.vercel.app"
   ],
   credentials: true
 }));
